@@ -10,13 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let topView = UIView()
+    // MARK: - Properties
+//    let topView = UIView()
     let labelStack = UIStackView()
     let dateLabel = UILabel()
     let mainLabel = UILabel()
-    let buttonView = UIView()
+//    let buttonView = UIView()
     let writeButton = UIButton()
     let textView = UITextView()
+    let imageView = UIImageView()
+    var subject: String?
+    private var isHidden = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +29,7 @@ class ViewController: UIViewController {
         autoLayout()
     }
     
+    // MARK: - Setting Method
     func configure() {
         labelStack.axis = .vertical
         
@@ -42,7 +47,13 @@ class ViewController: UIViewController {
         writeButton.backgroundColor = #colorLiteral(red: 0.2398266494, green: 0.6760053039, blue: 0.9694671035, alpha: 1)
         writeButton.layer.cornerRadius = 10
         writeButton.clipsToBounds = true
-        writeButton.addTarget(nil, action: #selector(writeButtonDidTap(_:)), for: .touchUpInside)
+        writeButton.addTarget(nil, action: #selector(writeButtonDidTap), for: .touchUpInside)
+        
+        imageView.backgroundColor = #colorLiteral(red: 0.737007916, green: 0.7005161643, blue: 0.9055165648, alpha: 1)
+        imageView.layer.borderColor = #colorLiteral(red: 0.5003563166, green: 0.4739893079, blue: 0.9927108884, alpha: 1)
+        imageView.layer.borderWidth = 2
+        imageView.clipsToBounds = true
+        imageView.isHidden = true
         
         textView.tintColor = .black
         textView.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -55,6 +66,7 @@ class ViewController: UIViewController {
         view.addSubview(labelStack)
         view.addSubview(writeButton)
         view.addSubview(textView)
+        view.addSubview(imageView)
         labelStack.addArrangedSubview(dateLabel)
         labelStack.addArrangedSubview(mainLabel)
     }
@@ -70,8 +82,14 @@ class ViewController: UIViewController {
         writeButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2).isActive = true
         writeButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.topAnchor.constraint(equalTo: writeButton.bottomAnchor, constant: 10).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.topAnchor.constraint(equalTo: writeButton.bottomAnchor, constant: 10).isActive = true
+        textView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
         textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
@@ -79,43 +97,95 @@ class ViewController: UIViewController {
     
     func todayDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 m월 d일"
+        formatter.dateFormat = "yyyy년 M월 d일"
         let now = Date()
         let dateString = formatter.string(from: now)
         return dateString
     }
     
-    @objc func writeButtonDidTap(_ sender: UIButton) {
-        if textView.isHidden {
+    // MARK: - Action Method
+    @objc func writeButtonDidTap() {
+        if isHidden == true {
             textView.isHidden = false
+            imageView.isHidden = false
             UIView.setAnimationsEnabled(false)
             writeButton.setTitle("기록하기", for: .normal)
             view.layoutIfNeeded()
             UIView.setAnimationsEnabled(true)
             UIView.animate(withDuration: 0.7, animations: {
-                self.labelStack.frame = CGRect(x: self.view.layoutMarginsGuide.layoutFrame.minX,
-                                               y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
-                                               width: self.labelStack.frame.width,
-                                               height: self.labelStack.frame.height)
-                self.writeButton.frame = CGRect(x: self.view.layoutMarginsGuide.layoutFrame.minX,
-                                                y: self.labelStack.frame.maxY + 10,
-                                                width: self.writeButton.frame.width,
-                                                height: self.writeButton.frame.height)
-                self.textView.frame = CGRect(x: self.textView.frame.minX,
-                                             y: self.writeButton.frame.maxY + 10,
-                                             width: self.textView.frame.width,
-                                             height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
+                self.labelStack.frame = CGRect(
+                    x: self.view.layoutMarginsGuide.layoutFrame.minX,
+                    y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
+                    width: self.labelStack.frame.width,
+                    height: self.labelStack.frame.height)
+                
+                self.writeButton.frame = CGRect(
+                    x: self.view.layoutMarginsGuide.layoutFrame.minX,
+                    y: self.labelStack.frame.maxY + 10,
+                    width: self.writeButton.frame.width,
+                    height: self.writeButton.frame.height)
+                
+                self.imageView.frame = CGRect(
+                    x: self.imageView.frame.minX,
+                    y: self.writeButton.frame.maxY + 10,
+                    width: self.imageView.frame.width,
+                    height: self.view.frame.maxY * 3/5 - self.writeButton.frame.maxY - 15)
+                
+                self.textView.frame = CGRect(
+                    x: self.textView.frame.minX,
+                    y: self.imageView.frame.maxY + 10,
+                    width: self.textView.frame.width,
+                    height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
             }, completion: nil)
+            isHidden.toggle()
         } else {
             textView.isHidden = true
+            imageView.isHidden = true
             UIView.animate(withDuration: 1, animations: {
+                self.saveSomeWords()
                 self.writeButton.setTitle("입력하기", for: .normal)
                 self.view.layoutIfNeeded()
             }, completion: nil)
+            
+            isHidden.toggle()
         }
     }
     
-
-
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        guard let touch = touches.first else { return }
+        let touchPoint = touch.location(in: touch.view)
+        let picker = UIImagePickerController()
+        
+        picker.delegate = self
+        picker.allowsEditing = true
+        
+        if imageView.frame.contains(touchPoint) {
+            present(picker, animated: false)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        writeButtonDidTap()
+    }
+    
+    private func saveSomeWords() {
+        print("save")
+    }
+    
 }
 
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let originalImage = info[.originalImage] as! UIImage
+        self.imageView.image = originalImage
+        
+        picker.dismiss(animated: false) {
+            self.writeButtonDidTap()
+            self.writeButtonDidTap()
+        }
+    }
+}

@@ -62,6 +62,7 @@ class ViewController: UIViewController {
         textView.layer.borderColor = #colorLiteral(red: 0.9212495685, green: 0.9219488502, blue: 0.9213578105, alpha: 1)
         textView.clipsToBounds = true
         textView.isHidden = true
+//        textView.delegate = self
         
         view.addSubview(labelStack)
         view.addSubview(writeButton)
@@ -189,3 +190,9 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         }
     }
 }
+
+//extension ViewController: UITextViewDelegate {
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if
+//    }
+//}

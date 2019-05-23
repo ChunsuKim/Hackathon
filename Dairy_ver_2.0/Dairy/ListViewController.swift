@@ -22,6 +22,7 @@ class ListViewController: UIViewController {
     return collectionView
     
   }()
+    
   
   override func viewDidLoad() {
     super.viewDidLoad()

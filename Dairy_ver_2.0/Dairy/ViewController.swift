@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
   
   // MARK: - Properties
+//    let userDefaults = UserDefaults.standard
+//    var tempDict: [String: String] = [:]
     let scrollView = UIScrollView()
   let labelStack = UIStackView()
   let dateLabel = UILabel()
@@ -19,6 +21,7 @@ class ViewController: UIViewController {
   let writeButton = UIButton()
   let textView = UITextView()
   let imageView = UIImageView()
+  var stringImg: String? = nil
   var subject: String?
   private var isHidden = true
   
@@ -208,17 +211,17 @@ class ViewController: UIViewController {
   private func saveSomeWords() {
     print("save")
     // 내용을 입력하지 않았을 경우 경고
-    guard self.textView.text?.isEmpty == false else {
-        let alert = UIAlertController(title: nil, message: "내용을 입력해주세요", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
-        
-        return
-    }
+//    guard self.textView.text?.isEmpty == false else {
+//        let alert = UIAlertController(title: nil, message: "내용을 입력해주세요", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        self.present(alert, animated: true)
+//
+//        return
+//    }
     
     // MemoData 객체를 생성, 데이터를 담는다
     let data = MemoData()
-    
+
     data.title = self.subject   // 제목
     data.contents = self.textView.text    // 내용
     data.image = self.imageView.image   // 이미지
@@ -227,6 +230,21 @@ class ViewController: UIViewController {
     // AppDelegate 객체를 읽어온 다음, memolist 배열에 MemoData 객체를 추가
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     appDelegate.memolist.append(data)
+    
+//    var tempDict: [String: MemoData] = [ "day1": MemoData]
+//
+//    let userDefaults = UserDefaults.standard
+//
+//    userDefaults.set(tempDict, forKey: "dataArr")
+//
+//    guard let userdict = userDefaults.dictionary(forKey: "day1") else {return}
+//    guard let dict = userdict as? [String: MemoData] else {return}
+//    guard let memoData = dict["day1"] else {return}
+    
+    
+    
+    
+    
   }
   
 }
@@ -237,6 +255,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     let originalImage = info[.originalImage] as! UIImage
     self.imageView.image = originalImage
+//    stringImg = originalImage.toString()
+//    let testImg = stringImg?.toImage()
     
     picker.dismiss(animated: false) {
       self.writeButtonDidTap()

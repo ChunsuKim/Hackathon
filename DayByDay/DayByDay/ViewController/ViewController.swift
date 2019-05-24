@@ -173,11 +173,10 @@ class ViewController: UIViewController {
             textView.isHidden = true
             imageView.isHidden = true
             UIView.animate(withDuration: 1, animations: {
-                self.saveSomeWords()
                 self.writeButton.setTitle("입력하기", for: .normal)
                 self.view.layoutIfNeeded()
             }, completion: nil)
-            
+            saveSomeWords()
             isHidden.toggle()
         }
     }
@@ -230,8 +229,43 @@ class ViewController: UIViewController {
         
         // 코어 데이터에 메모 데이터를 추가한다
         self.dao.insert(data)
+    }
+    
+    func afterImagePickLayout() {
+        scrollView.isHidden = false
+        textView.isHidden = false
+        imageView.isHidden = false
+        writeButton.setTitle("기록하기", for: .normal)
         
+        labelStack.frame = CGRect(
+            x: self.view.layoutMarginsGuide.layoutFrame.minX,
+            y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
+            width: self.labelStack.frame.width,
+            height: self.labelStack.frame.height)
         
+        writeButton.frame = CGRect(
+            x: self.view.layoutMarginsGuide.layoutFrame.minX,
+            y: self.labelStack.frame.maxY + 10,
+            width: self.writeButton.frame.width,
+            height: self.writeButton.frame.height)
+        
+        scrollView.frame = CGRect(
+            x: self.scrollView.frame.minX,
+            y: self.writeButton.frame.maxY + 10,
+            width: self.scrollView.frame.width,
+            height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
+        
+        imageView.frame = CGRect(
+            x: self.scrollView.frame.minX,
+            y: self.scrollView.frame.minY,
+            width: self.imageView.frame.width,
+            height: self.scrollView.frame.maxY * 3/5)
+        
+        textView.frame = CGRect(
+            x: self.textView.frame.minX,
+            y: self.imageView.frame.maxY + 10,
+            width: self.textView.frame.width,
+            height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
     }
     
 }
@@ -244,8 +278,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         self.imageView.image = originalImage
         
         picker.dismiss(animated: false) {
-            self.writeButtonDidTap()
-            self.writeButtonDidTap()
+            self.afterImagePickLayout()
+            
         }
     }
 }

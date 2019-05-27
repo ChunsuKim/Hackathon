@@ -14,11 +14,7 @@ class SettingViewController: UIViewController {
   let userImageView = UIImageView()
   let userMessageLabel = UILabel()
   let userUpdateButton = UIButton(type: .system)
-  
-  
   let tableView = UITableView()
-  //    let defaultButton = UIButton(type: .custom)
-  //    let darkModeButton = UIButton(type: .custom)
   
   
   override func viewDidLoad() {
@@ -32,9 +28,6 @@ class SettingViewController: UIViewController {
       override func viewWillAppear(_ animated: Bool) {
         let state = UserDefaults.standard.object(forKey: "state")
         userMessageLabel.text = state as? String
-        
-//        let image = UserDefaults.standard.object(forKey: "image")
-//        userImageView.image = image as? UIImage
   }
   
   
@@ -57,19 +50,16 @@ class SettingViewController: UIViewController {
     topView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
     topView.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
     
-    
     userImageView.translatesAutoresizingMaskIntoConstraints = false
     userImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20).isActive = true
     userImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 5).isActive = true
     userImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
     userImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
     
-    
     userMessageLabel.translatesAutoresizingMaskIntoConstraints = false
     userMessageLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor).isActive = true
     userMessageLabel.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -10).isActive = true
     userMessageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//    userMessageLabel.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -60).isActive = true
     userMessageLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7).isActive = true
     
     userUpdateButton.translatesAutoresizingMaskIntoConstraints = false
@@ -77,8 +67,6 @@ class SettingViewController: UIViewController {
     userUpdateButton.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -10).isActive = true
     userUpdateButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
     userUpdateButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-    
-    
     
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
@@ -95,12 +83,6 @@ class SettingViewController: UIViewController {
     userImageView.layer.cornerRadius = 50
     userImageView.clipsToBounds = true
     userImageView.image = UIImage(named: "user")
-    
-//    userImageView.backgroundColor = .green
-//    let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewDidTap(_:)))
-//    userImageView.isUserInteractionEnabled = true
-//    userImageView.addGestureRecognizer(imageTapGesture)
-    
     
     userMessageLabel.backgroundColor = .white
     userMessageLabel.textAlignment = .center
@@ -122,14 +104,6 @@ class SettingViewController: UIViewController {
     alertAction()
   }
     
-//    @objc func imageViewDidTap(_ sender: UIImageView) {
-//        let picker = UIImagePickerController()
-//
-//        picker.delegate = self
-//        picker.allowsEditing = true
-//        present(picker, animated: false)
-//    }
-  
   func alertAction() {
     
     let alert = UIAlertController(title: "수정", message: "", preferredStyle: .alert)
@@ -151,30 +125,6 @@ class SettingViewController: UIViewController {
     alert.addAction(okAction)
     alert.addAction(cancelAction)
     self.present(alert, animated: true)
-  }
-  
-  
-  @objc func defaultButton(_ sender: UIButton) {
-    Theme.defaultTheme()
-    
-  }
-  
-  @objc func darkButton(_ sender: UIButton) {
-    Theme.defaultTheme()
-    guard let vc = tabBarController?.viewControllers![0] as? ViewController,
-      let listVC = tabBarController?.viewControllers![1] as? ListViewController
-      else { return }
-    let button = vc.writeButton
-    let dateLabel = vc.dateLabel
-    let textLabel = vc.mainLabel
-    button.backgroundColor = Theme.writeButton
-    dateLabel.textColor = Theme.dateLabel
-    textLabel.textColor = Theme.mainLabel
-    listVC.tempColor = Theme.cardView
-    
-    
-    
-   
   }
 }
 
@@ -249,26 +199,3 @@ extension SettingViewController: UITableViewDelegate {
     }
   }
 }
-
-//extension SettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true)
-//
-//    }
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//
-//        let origianlImage = info[.originalImage] as! UIImage
-//        let editedImage = info[.editedImage] as? UIImage
-//        let selectedImage = editedImage ?? origianlImage
-//        self.userImageView.image = selectedImage
-//
-//
-//        UserDefaults.standard.set(selectedImage, forKey: "image")
-//
-//        picker.dismiss(animated: false)
-//    }
-//
-//}
-

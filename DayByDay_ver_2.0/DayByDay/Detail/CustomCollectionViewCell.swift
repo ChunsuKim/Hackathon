@@ -21,8 +21,6 @@ class CustomCollectionViewCell: UICollectionViewCell {
     var registerDate = UILabel()
     let view = UIView()
     let removeButton = UIButton()
-//    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//    lazy var dao = MemoDAO()
     
     
     override init(frame: CGRect) {

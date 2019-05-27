@@ -36,18 +36,14 @@ class CustomTabBarViewController: UITabBarController {
         let firstTab = ViewController()
         let firstTabBarItem = UITabBarItem(title: "기록", image: UIImage(named: "pen"), selectedImage: UIImage(named: "pen"))
         firstTab.tabBarItem = firstTabBarItem
-        firstTab.view.backgroundColor = .white
-        
         
         let secondTab = ListViewController()
         let secondTabBarItem = UITabBarItem(title: "열람", image: UIImage(named: "note"), selectedImage: UIImage(named: "note"))
         secondTab.tabBarItem = secondTabBarItem
-        secondTab.view.backgroundColor = .white
         
         let thirdTab = SettingViewController()
         let thridTabBarItem = UITabBarItem(title: "설정", image: UIImage(named: "setting"), selectedImage: UIImage(named: "setting"))
         thirdTab.tabBarItem = thridTabBarItem
-        //        thirdTab.view.backgroundColor = .white
         
         self.viewControllers = [
           firstTab,

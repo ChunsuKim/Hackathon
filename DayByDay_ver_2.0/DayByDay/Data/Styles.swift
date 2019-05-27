@@ -11,7 +11,6 @@ import UIKit
 
 struct Theme {
     
-    static var num = 4
     static var tabBarTint = #colorLiteral(red: 0.4621340632, green: 0.8370614648, blue: 1, alpha: 1)
     static var tabBarBarTint = #colorLiteral(red: 0.1071653441, green: 0.2755028009, blue: 0.3986083865, alpha: 1)
     static var tabBarUnselectedTintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

@@ -148,7 +148,6 @@ class ViewController: UIViewController {
       textView.isHidden = false
       imageView.isHidden = false
         clear()
-      //            UIView.setAnimationsEnabled(false)
       writeButton.setTitle("기록하기", for: .normal)
       view.layoutIfNeeded()
       UIView.setAnimationsEnabled(true)
@@ -210,19 +209,6 @@ class ViewController: UIViewController {
     present(picker, animated: false)
   }
   
-  //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-  //        super.touchesBegan(touches, with: event)
-  //        guard let touch = touches.first else { return }
-  //        let touchPoint = touch.location(in: touch.view)
-  //        let picker = UIImagePickerController()
-  //
-  //        picker.delegate = self
-  //        picker.allowsEditing = true
-  //
-  //        if imageView.frame.contains(touchPoint) {
-  //            present(picker, animated: false)
-  //        }
-  //    }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)

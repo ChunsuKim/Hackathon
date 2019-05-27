@@ -48,8 +48,6 @@ class ListViewController: UIViewController {
   
   private func addSubview() {
     view.addSubview(collectionView)
-    //    view.addSubview(subject)
-    //    view.addSubview(registerDate)
     view.addSubview(topView)
     topView.addSubview(userMessageLabel)
     topView.addSubview(userImageView)
@@ -75,7 +73,6 @@ class ListViewController: UIViewController {
     userMessageLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor).isActive = true
     userMessageLabel.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -10).isActive = true
     userMessageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    //    userMessageLabel.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -60).isActive = true
     userMessageLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7).isActive = true
     
     
@@ -132,7 +129,6 @@ extension ListViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
     
     // memolist 배열 데이터에서 주어진 행에 맞는 데이터를 꺼냄
     let item = self.appDelegate.memolist[indexPath.item]

@@ -16,6 +16,7 @@ class ListViewController: UIViewController {
   let topView = UIView()
   let userImageView = UIImageView()
   let userMessageLabel = UILabel()
+    let searchController = UISearchController(searchResultsController: nil)
   
   
   var collectionView: UICollectionView = {

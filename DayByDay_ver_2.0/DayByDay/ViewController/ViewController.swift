@@ -6,6 +6,8 @@
 //  Copyright © 2019 Chunsu Kim. All rights reserved.
 //
 
+import YPImagePicker
+import Photos
 import UIKit
 
 class ViewController: UIViewController {
@@ -19,6 +21,8 @@ class ViewController: UIViewController {
   let textView = UITextView()
   let imageView = UIImageView()
   var subject: String?
+    var selectedItems = [YPMediaItem]()
+    
   private var isHidden = true
   lazy var dao = MemoDAO()
   
@@ -73,7 +77,7 @@ class ViewController: UIViewController {
     scrollView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     
     imageView.contentMode = .scaleAspectFit
-    imageView.backgroundColor = #colorLiteral(red: 0.737007916, green: 0.7005161643, blue: 0.9055165648, alpha: 1)
+    imageView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     imageView.layer.borderColor = #colorLiteral(red: 0.5003563166, green: 0.4739893079, blue: 0.9927108884, alpha: 1)
     imageView.layer.borderWidth = 2
     imageView.clipsToBounds = true
@@ -202,11 +206,31 @@ class ViewController: UIViewController {
   }
   
   @objc func imageViewDidTap(_ sender: UIImageView) {
-    let picker = UIImagePickerController()
+    var config = YPImagePickerConfiguration()
+    config.startOnScreen = .library
+    config.screens = [.library, .photo]
+    config.showsCrop = .rectangle(ratio: 16/11)
+    config.wordings.libraryTitle = "Gallery"
+    config.library.maxNumberOfItems = 5
+    let picker = YPImagePicker(configuration: config)
+    picker.didFinishPicking { [unowned picker] items, _ in
+        
+        self.selectedItems = items
+        self.imageView.image = items.singlePhoto?.image
+        picker.dismiss(animated: false) {
+            self.afterImagePickLayout()
+        }
+    }
+    present(picker, animated: false) {
+        self.afterImagePickLayout()
+    }
     
-    picker.delegate = self
-    picker.allowsEditing = true
-    present(picker, animated: false)
+//    let picker = UIImagePickerController()
+//
+//    picker.delegate = self
+//    picker.allowsEditing = true
+//    picker.modalPresentationStyle = .overFullScreen
+//    present(picker, animated: false)
   }
   
   
@@ -219,7 +243,7 @@ class ViewController: UIViewController {
     print("save")
     
     guard self.textView.text?.isEmpty == false else {
-        let alert = UIAlertController(title: nil, message: "내용을 입력해주세요", preferredStyle:.alert)
+        let alert = UIAlertController(title: "내용을 입력해주세요.", message: "내용을 입력하지 않으면 저장이 되지 않습니다.", preferredStyle:.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
         
@@ -283,31 +307,30 @@ class ViewController: UIViewController {
         textView.text = nil
         imageView.image = nil
     }
-  
 }
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-  
-  
-  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-    picker.dismiss(animated: true)
-  
-  }
-  
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
-    let origianlImage = info[.originalImage] as! UIImage
-    let editedImage = info[.editedImage] as? UIImage
-    let selectedImage = editedImage ?? origianlImage
-    self.imageView.image = selectedImage
-    
-    
-    picker.dismiss(animated: false) {
-      self.afterImagePickLayout()
-      
-    }
-  }
-}
+//extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//
+//  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//
+//    picker.dismiss(animated: true)
+//
+//  }
+//
+//  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//
+//    let origianlImage = info[.originalImage] as! UIImage
+//    let editedImage = info[.editedImage] as? UIImage
+//    let selectedImage = editedImage ?? origianlImage
+//    self.imageView.image = selectedImage
+//
+//    picker.dismiss(animated: false) {
+//      self.afterImagePickLayout()
+//
+//    }
+//  }
+//}
 
 extension ViewController: UITextViewDelegate {
   func textViewDidChange(_ textView: UITextView) {

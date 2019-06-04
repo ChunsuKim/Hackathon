@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A090D303735FD24F7A306E44 /* Pods_DayByDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC63E8833D5D01292614BCF1 /* Pods_DayByDay.framework */; };
 		F3A3978522962B730064460D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3978422962B730064460D /* AppDelegate.swift */; };
 		F3A3978722962B730064460D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3978622962B730064460D /* ViewController.swift */; };
 		F3A3978A22962B730064460D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3A3978822962B730064460D /* Main.storyboard */; };
@@ -24,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		19AA6F65D35D5FD1E3D5DCD2 /* Pods-DayByDay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayByDay.release.xcconfig"; path = "Target Support Files/Pods-DayByDay/Pods-DayByDay.release.xcconfig"; sourceTree = "<group>"; };
+		B2BB0AA46A9D6AB49A9E171B /* Pods-DayByDay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DayByDay.debug.xcconfig"; path = "Target Support Files/Pods-DayByDay/Pods-DayByDay.debug.xcconfig"; sourceTree = "<group>"; };
+		CC63E8833D5D01292614BCF1 /* Pods_DayByDay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DayByDay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3A3978122962B730064460D /* DayByDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DayByDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3A3978422962B730064460D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3A3978622962B730064460D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,17 +51,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A090D303735FD24F7A306E44 /* Pods_DayByDay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79CF4D407C43E3DEDB821F0F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CC63E8833D5D01292614BCF1 /* Pods_DayByDay.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9E5C4B7494B04A7B365EF4FD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B2BB0AA46A9D6AB49A9E171B /* Pods-DayByDay.debug.xcconfig */,
+				19AA6F65D35D5FD1E3D5DCD2 /* Pods-DayByDay.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F3A3977822962B720064460D = {
 			isa = PBXGroup;
 			children = (
 				F3A3978322962B730064460D /* DayByDay */,
 				F3A3978222962B730064460D /* Products */,
+				9E5C4B7494B04A7B365EF4FD /* Pods */,
+				79CF4D407C43E3DEDB821F0F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,9 +146,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3A3979622962B740064460D /* Build configuration list for PBXNativeTarget "DayByDay" */;
 			buildPhases = (
+				EB528F776659EAA4E8E14EAE /* [CP] Check Pods Manifest.lock */,
 				F3A3977D22962B720064460D /* Sources */,
 				F3A3977E22962B720064460D /* Frameworks */,
 				F3A3977F22962B720064460D /* Resources */,
+				957085C07D7BC27F0B18BE3A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -180,6 +206,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		957085C07D7BC27F0B18BE3A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DayByDay/Pods-DayByDay-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DayByDay/Pods-DayByDay-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DayByDay/Pods-DayByDay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB528F776659EAA4E8E14EAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DayByDay-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F3A3977D22962B720064460D /* Sources */ = {
@@ -340,6 +408,7 @@
 		};
 		F3A3979722962B740064460D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2BB0AA46A9D6AB49A9E171B /* Pods-DayByDay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -358,6 +427,7 @@
 		};
 		F3A3979822962B740064460D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19AA6F65D35D5FD1E3D5DCD2 /* Pods-DayByDay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

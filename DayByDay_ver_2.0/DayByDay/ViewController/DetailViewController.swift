@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     var savedData : MemoData?
-    let cardViewForImage = UIView()
+//    let cardViewForImage = UIView()
     let cardView = UIView()
     let stackView = UIStackView()
     let scrollView = UIScrollView()
@@ -34,9 +34,10 @@ class DetailViewController: UIViewController {
     
     func addSubview() {
         view.addSubview(cardView)
-        view.addSubview(cardViewForImage)
+//        view.addSubview(cardViewForImage)
         cardView.addSubview(scrollView)
-        cardViewForImage.addSubview(imageView)
+//        cardViewForImage.addSubview(imageView)
+        view.addSubview(imageView)
         scrollView.addSubview(stackView)
         
         stackView.addArrangedSubview(registerDateLabel)
@@ -49,16 +50,16 @@ class DetailViewController: UIViewController {
     func autoLayout() {
         let guide = view.safeAreaLayoutGuide
         
-        cardViewForImage.translatesAutoresizingMaskIntoConstraints = false
+//        cardViewForImage.translatesAutoresizingMaskIntoConstraints = false
 //        cardViewForImage.centerXAnchor.constraint(equalTo: guide.centerXAnchor).isActive = true
 //        cardViewForImage.centerYAnchor.constraint(equalTo: guide.centerYAnchor).isActive = true
-        cardViewForImage.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
-        cardViewForImage.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
-        cardViewForImage.topAnchor.constraint(equalTo: guide.topAnchor, constant: 20).isActive = true
-        cardViewForImage.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier:  0.3).isActive = true
+//        cardViewForImage.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
+//        cardViewForImage.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
+//        cardViewForImage.topAnchor.constraint(equalTo: guide.topAnchor, constant: 20).isActive = true
+//        cardViewForImage.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier:  0.3).isActive = true
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.topAnchor.constraint(equalTo: cardViewForImage.bottomAnchor).isActive = true
+        cardView.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
         cardView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
         cardView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
         cardView.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20).isActive = true
@@ -77,11 +78,13 @@ class DetailViewController: UIViewController {
         stackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.topAnchor.constraint(equalTo: cardViewForImage.topAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: cardViewForImage.bottomAnchor).isActive = true
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.45)
+        
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.topAnchor.constraint(equalTo: cardViewForImage.topAnchor).isActive = true
+//        imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
+//        imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
+//        imageView.bottomAnchor.constraint(equalTo: cardViewForImage.bottomAnchor).isActive = true
         
 //        registerDateLabel.translatesAutoresizingMaskIntoConstraints = false
 //        registerDateLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
@@ -113,17 +116,19 @@ class DetailViewController: UIViewController {
       
         cardView.backgroundColor = .white
         cardView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        cardView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
         cardView.layer.shadowOpacity = 0.2
         cardView.layer.shadowRadius = 4.0
+        cardView.clipsToBounds = true
         
-        cardViewForImage.backgroundColor = .white
-        cardViewForImage.layer.cornerRadius = 20
-        cardViewForImage.layer.shadowColor = UIColor.black.cgColor
-        cardViewForImage.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        cardViewForImage.layer.shadowOpacity = 0.2
-        cardViewForImage.layer.shadowRadius = 4.0
+//        cardViewForImage.backgroundColor = .white
+//        cardViewForImage.layer.cornerRadius = 20
+//        cardViewForImage.layer.shadowColor = UIColor.black.cgColor
+//        cardViewForImage.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+//        cardViewForImage.layer.shadowOpacity = 0.2
+//        cardViewForImage.layer.shadowRadius = 4.0
         
         contents.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         contents.textColor = #colorLiteral(red: 0.2683359385, green: 0.3678353727, blue: 0.7584179044, alpha: 1)

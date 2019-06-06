@@ -209,7 +209,7 @@ class ViewController: UIViewController {
     var config = YPImagePickerConfiguration()
     config.startOnScreen = .library
     config.screens = [.library, .photo]
-    config.showsCrop = .rectangle(ratio: 16/11)
+    config.showsCrop = .rectangle(ratio: 16/15)
     config.wordings.libraryTitle = "Gallery"
     config.library.maxNumberOfItems = 5
     let picker = YPImagePicker(configuration: config)

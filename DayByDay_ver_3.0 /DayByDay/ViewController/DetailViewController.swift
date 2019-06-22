@@ -10,47 +10,23 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    // MARK: - Properties
     var savedData : MemoData?
     let contents = UITextView()
     let imageView = UIImageView()
     let registerDateLabel = UILabel()
     
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSubview()
-        configure()
-        autoLayout()
-        printView()
+        configureUserInterface()
+        configureConstraints()
+        showSavedUserInputData()
     }
     
-    private func addSubview() {
-        
-        view.addSubview(imageView)
-        view.addSubview(contents)
-        view.addSubview(registerDateLabel)
-    }
-    
-    private func autoLayout() {
-        let guide = view.safeAreaLayoutGuide
-        
-        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.45)
-        
-        registerDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        registerDateLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
-        registerDateLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
-        registerDateLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
-        registerDateLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        contents.translatesAutoresizingMaskIntoConstraints = false
-        contents.topAnchor.constraint(equalTo: registerDateLabel.bottomAnchor, constant: 10).isActive = true
-        contents.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
-        contents.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
-        contents.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20).isActive = true
-        
-    }
-    
-    private func configure() {
+    // MARK: - configuration
+    private func configureUserInterface() {
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         let toolBarKeyboard = UIToolbar()
@@ -76,9 +52,33 @@ class DetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 20
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        view.addSubview(imageView)
+        view.addSubview(contents)
+        view.addSubview(registerDateLabel)
     }
     
-    private func printView() {
+    private func configureConstraints() {
+        let guide = view.safeAreaLayoutGuide
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.45)
+        
+        registerDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        registerDateLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
+        registerDateLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
+        registerDateLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
+        registerDateLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        contents.translatesAutoresizingMaskIntoConstraints = false
+        contents.topAnchor.constraint(equalTo: registerDateLabel.bottomAnchor, constant: 10).isActive = true
+        contents.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20).isActive = true
+        contents.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20).isActive = true
+        contents.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -20).isActive = true
+        
+    }
+    
+    // MARK: - Action method
+    private func showSavedUserInputData() {
         // 제목, 내용, 이미지 출력
         self.contents.text = savedData?.contents
         self.imageView.image = savedData?.image

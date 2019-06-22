@@ -10,19 +10,19 @@ import UIKit
 
 class SettingViewController: UIViewController {
   
+    // MARK: - Properties
     let topView = UIView()
     let userImageView = UIImageView()
     let userMessageLabel = UILabel()
     let userUpdateButton = UIButton(type: .system)
     let tableView = UITableView()
     
-    
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSubview()
-        autoLayout()
-        configure()
+        configureUserInterface()
+        configureConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,18 +31,40 @@ class SettingViewController: UIViewController {
 //        let themeSave = UserDefaults.standard.data(forKey: "theme")
     }
     
-    
-    private func addSubview() {
+    // MARK: - configuration
+    private func configureUserInterface() {
+        topView.backgroundColor = .white
+        
+        userImageView.layer.borderWidth = 1
+        userImageView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        userImageView.layer.cornerRadius = 50
+        userImageView.clipsToBounds = true
+        userImageView.image = UIImage(named: "user")
+        
+        userMessageLabel.backgroundColor = .white
+        userMessageLabel.textAlignment = .center
+        userMessageLabel.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        userMessageLabel.layer.borderWidth = 1
+        userMessageLabel.layer.cornerRadius = 10
+        userMessageLabel.clipsToBounds = true
+        
+        userUpdateButton.setTitle("상태메시지 수정", for: .normal)
+        userUpdateButton.addTarget(self, action: #selector(diduserUpdateButtonDidTap(_:)), for: .touchUpInside)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         view.addSubview(topView)
         view.addSubview(tableView)
         
         topView.addSubview(userImageView)
         topView.addSubview(userMessageLabel)
         topView.addSubview(userUpdateButton)
-        
     }
     
-    private func autoLayout() {
+    private func configureConstraints() {
         let guide = view.safeAreaLayoutGuide
         
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -76,36 +98,7 @@ class SettingViewController: UIViewController {
         tableView.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 0.8).isActive = true
     }
     
-    private func configure() {
-        topView.backgroundColor = .white
-        
-        userImageView.layer.borderWidth = 1
-        userImageView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        userImageView.layer.cornerRadius = 50
-        userImageView.clipsToBounds = true
-        userImageView.image = UIImage(named: "user")
-        
-        userMessageLabel.backgroundColor = .white
-        userMessageLabel.textAlignment = .center
-        userMessageLabel.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        userMessageLabel.layer.borderWidth = 1
-        userMessageLabel.layer.cornerRadius = 10
-        userMessageLabel.clipsToBounds = true
-        
-        userUpdateButton.setTitle("상태메시지 수정", for: .normal)
-        userUpdateButton.addTarget(self, action: #selector(diduserUpdateButtonDidTap(_:)), for: .touchUpInside)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
-    
-    @objc private func diduserUpdateButtonDidTap(_ sender: UIButton) {
-        alertAction()
-    }
-    
-    private func alertAction() {
+    private func configureAlertAction() {
         
         let alert = UIAlertController(title: "수정", message: "", preferredStyle: .alert)
         alert.addTextField { (tf) in
@@ -127,8 +120,14 @@ class SettingViewController: UIViewController {
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
     }
+    
+    // MARK: - Action method
+    @objc private func diduserUpdateButtonDidTap(_ sender: UIButton) {
+        configureAlertAction()
+    }
 }
 
+// MARK: - tableView dataSource extension
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -150,6 +149,7 @@ extension SettingViewController: UITableViewDataSource {
     
 }
 
+// MARK: - tableView delegate extension
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {

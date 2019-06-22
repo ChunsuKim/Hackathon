@@ -27,27 +27,23 @@ class ViewController: UIViewController {
     private var isHidden = true
     lazy var dao = MemoDAO()
     
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
-        autoLayout()
-        notiSetting()
+        configureUserInterface()
+        configureConstraints()
+        configureNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         changeTheme()
     }
     
-    func changeTheme() {
-        dateLabel.textColor = Theme.dateLabel
-        mainLabel.textColor = Theme.mainLabel
-        writeButton.backgroundColor = Theme.writeButton
-        writeButton.titleLabel?.textColor = Theme.buttonText
-    }
     
-    // MARK: - Setting Method
-    private func configure() {
+    
+    // MARK: - configuration
+    private func configureUserInterface() {
         let toolBarKeyboard = UIToolbar()
         toolBarKeyboard.sizeToFit()
         let buttonflexBar = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -60,7 +56,7 @@ class ViewController: UIViewController {
         dateLabel.text = "2019년 8월 16일"
         dateLabel.font = UIFont.systemFont(ofSize: 24, weight: .heavy)
         dateLabel.textColor = Theme.dateLabel
-        dateLabel.text = todayDate()
+        dateLabel.text = configureTodayDate()
         
         mainLabel.text = "안녕하세요. \n오늘 하루 어땠나요 ?"
         mainLabel.numberOfLines = 0
@@ -116,7 +112,7 @@ class ViewController: UIViewController {
         
     }
     
-    private func autoLayout() {
+    private func configureConstraints() {
         labelStack.translatesAutoresizingMaskIntoConstraints = false
         labelStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         labelStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
@@ -154,12 +150,12 @@ class ViewController: UIViewController {
         textViewLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
     }
     
-    private func notiSetting() {
+    private func configureNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func textViewLabelSetting() {
+    private func configureTextViewLabel() {
         textViewLabel.text = "하고싶은 이야기를 입력해주세요"
         textViewLabel.isHidden = false
         textViewLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -167,12 +163,20 @@ class ViewController: UIViewController {
         textViewLabel.textAlignment = .center
     }
     
-    private func todayDate() -> String {
+    private func configureTodayDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 M월 d일"
         let now = Date()
         let dateString = formatter.string(from: now)
         return dateString
+    }
+    
+    private func configureDefaultImageView() {
+        imageView.contentMode = .center
+        imageView.image = UIImage(named: "default")
+        imageView.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        imageView.layer.borderWidth = 2
+        imageView.clipsToBounds = true
     }
     
     // MARK: - Action Method
@@ -181,9 +185,9 @@ class ViewController: UIViewController {
             scrollView.isHidden = false
             textView.isHidden = false
             imageView.isHidden = false
-            clear()
-            textViewLabelSetting()
-            imageViewDefaultSetting()
+            clearImageViewAndTextView()
+            configureTextViewLabel()
+            configureDefaultImageView()
             writeButton.setTitle("기록하기", for: .normal)
             view.layoutIfNeeded()
             UIView.setAnimationsEnabled(true)
@@ -228,7 +232,7 @@ class ViewController: UIViewController {
                 self.writeButton.setTitle("입력하기", for: .normal)
                 self.view.layoutIfNeeded()
             }, completion: nil)
-            saveSomeWords()
+            saveUserInputData()
             isHidden.toggle()
         }
     }
@@ -250,7 +254,7 @@ class ViewController: UIViewController {
             self.selectedItems = items
             self.imageView.image = items.singlePhoto?.image
             picker.dismiss(animated: false) {
-                self.afterImagePickLayout()
+                self.showLayoutAfterUserImagePicked()
             }
         }
         present(picker, animated: false) {
@@ -258,7 +262,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func saveSomeWords() {
+    private func saveUserInputData() {
         print("save")
         
         guard self.textView.text?.isEmpty == false else {
@@ -285,7 +289,7 @@ class ViewController: UIViewController {
         self.dao.insert(data)
     }
     
-    private func afterImagePickLayout() {
+    private func showLayoutAfterUserImagePicked() {
         scrollView.isHidden = false
         textView.isHidden = false
         imageView.isHidden = false
@@ -323,11 +327,18 @@ class ViewController: UIViewController {
             height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
     }
     
+    private func changeTheme() {
+        dateLabel.textColor = Theme.dateLabel
+        mainLabel.textColor = Theme.mainLabel
+        writeButton.backgroundColor = Theme.writeButton
+        writeButton.titleLabel?.textColor = Theme.buttonText
+    }
+    
     private func imagePickerCancelDidtap() {
         scrollView.isHidden = false
         textView.isHidden = false
         imageView.isHidden = false
-        imageViewDefaultSetting()
+        configureDefaultImageView()
         writeButton.setTitle("기록하기", for: .normal)
         
         labelStack.frame = CGRect(
@@ -361,14 +372,9 @@ class ViewController: UIViewController {
             height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
     }
     
-    private func imageViewDefaultSetting() {
-        imageView.contentMode = .center
-        imageView.image = UIImage(named: "default")
-        imageView.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        imageView.layer.borderWidth = 2
-        imageView.clipsToBounds = true
-    }
     
+    
+    // MARK: - Action method
     @objc private func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -150
         textViewLabel.isHidden = true
@@ -380,27 +386,25 @@ class ViewController: UIViewController {
     
     private func textViewLabelShow() {
         if textView.text?.isEmpty == true {
-            textViewLabelSetting()
+            configureTextViewLabel()
         } else {
             self.textViewLabel.isHidden = true
         }
-        
     }
     
-    private func clear() {
-        textView.text = nil
+    private func clearImageViewAndTextView() {
         imageView.image = nil
+        textView.text = nil
     }
-    
 }
 
+// MARK: - textView delegate extension
 extension ViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         // 내용의 최대 10자리까지 읽어 subject 변수에 저장
         let contents = textView.text as NSString
         let length = ((contents.length > 10) ? 10 : contents.length)
         self.subject = contents.substring(with: NSRange(location: 0, length: length))
-        
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
@@ -408,6 +412,5 @@ extension ViewController: UITextViewDelegate {
         textViewLabelShow()
         return true
     }
-    
 }
 

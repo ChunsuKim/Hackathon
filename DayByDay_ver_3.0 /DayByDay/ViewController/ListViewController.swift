@@ -10,6 +10,7 @@ import UIKit
 
 class ListViewController: UIViewController {
   
+    // MARK: - Properties
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     lazy var dao = MemoDAO()
     
@@ -18,24 +19,22 @@ class ListViewController: UIViewController {
     let userMessageLabel = UILabel()
     let searchController = UISearchController(searchResultsController: nil)
     
-    
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
-        
     }()
     
     var tempColor: UIColor = #colorLiteral(red: 0.4621340632, green: 0.8370614648, blue: 1, alpha: 1)
     
-    
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSubview()
-        autoLayout()
-        configure()
+
+        configureUserInterface()
+        configureConstraints()
         
     }
     
@@ -47,45 +46,8 @@ class ListViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
-    private func addSubview() {
-        view.addSubview(collectionView)
-        view.addSubview(topView)
-        topView.addSubview(userMessageLabel)
-        topView.addSubview(userImageView)
-    }
-    
-    private func autoLayout() {
-        let guide = view.safeAreaLayoutGuide
-        
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
-        topView.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        topView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
-        topView.bottomAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
-        
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20).isActive = true
-        userImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 5).isActive = true
-        userImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        userImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        
-        userMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        userMessageLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor).isActive = true
-        userMessageLabel.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -10).isActive = true
-        userMessageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        userMessageLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7).isActive = true
-        
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
-        collectionView.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 0.8).isActive = true
-        
-    }
-    
-    private func configure() {
+    // MARK: - configuration
+    private func configureUserInterface() {
         let settingVC = SettingViewController()
         
         userMessageLabel.backgroundColor = .white
@@ -118,10 +80,45 @@ class ListViewController: UIViewController {
         userMessageLabel.layer.cornerRadius = 10
         userMessageLabel.clipsToBounds = true
         
+        view.addSubview(collectionView)
+        view.addSubview(topView)
+        topView.addSubview(userMessageLabel)
+        topView.addSubview(userImageView)
+    }
+    
+    private func configureConstraints() {
+        let guide = view.safeAreaLayoutGuide
+        
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
+        topView.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
+        topView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
+        topView.bottomAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
+        
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        userImageView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20).isActive = true
+        userImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 5).isActive = true
+        userImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        userImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        userMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        userMessageLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor).isActive = true
+        userMessageLabel.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -10).isActive = true
+        userMessageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        userMessageLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7).isActive = true
+        
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
+        collectionView.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 0.8).isActive = true
         
     }
 }
 
+// MARK: - collectionView dataSource extension
 extension ListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -151,6 +148,7 @@ extension ListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - collectionView delegate extension
 extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
@@ -162,6 +160,7 @@ extension ListViewController: UICollectionViewDelegate {
     
 }
 
+// MARK: - collectionView delegate flowLayout extension
 extension ListViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -185,6 +184,7 @@ extension ListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - collectionView cell delegate extension
 extension ListViewController: CustomCollectionViewCellDelegate {
     
     func removeCell(_ sender: Int) {

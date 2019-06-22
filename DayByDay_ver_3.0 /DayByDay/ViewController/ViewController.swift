@@ -179,6 +179,38 @@ class ViewController: UIViewController {
         imageView.clipsToBounds = true
     }
     
+    private func ChangedLayout() {
+        self.labelStack.frame = CGRect(
+            x: self.view.layoutMarginsGuide.layoutFrame.minX,
+            y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
+            width: self.labelStack.frame.width,
+            height: self.labelStack.frame.height)
+        
+        self.writeButton.frame = CGRect(
+            x: self.view.layoutMarginsGuide.layoutFrame.minX,
+            y: self.labelStack.frame.maxY + 10,
+            width: self.writeButton.frame.width,
+            height: self.writeButton.frame.height)
+        
+        self.scrollView.frame = CGRect(
+            x: self.scrollView.frame.minX,
+            y: self.writeButton.frame.maxY + 10,
+            width: self.scrollView.frame.width,
+            height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
+        
+        self.imageView.frame = CGRect(
+            x: self.scrollView.frame.minX,
+            y: self.scrollView.frame.minY,
+            width: self.imageView.frame.width,
+            height: self.scrollView.frame.maxY * 3/5)
+        
+        self.textView.frame = CGRect(
+            x: self.textView.frame.minX,
+            y: self.imageView.frame.maxY + 10,
+            width: self.textView.frame.width,
+            height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
+    }
+    
     // MARK: - Action Method
     @objc private func writeButtonDidTap() {
         if isHidden == true {
@@ -192,35 +224,7 @@ class ViewController: UIViewController {
             view.layoutIfNeeded()
             UIView.setAnimationsEnabled(true)
             UIView.animate(withDuration: 0.7, animations: {
-                self.labelStack.frame = CGRect(
-                    x: self.view.layoutMarginsGuide.layoutFrame.minX,
-                    y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
-                    width: self.labelStack.frame.width,
-                    height: self.labelStack.frame.height)
-                
-                self.writeButton.frame = CGRect(
-                    x: self.view.layoutMarginsGuide.layoutFrame.minX,
-                    y: self.labelStack.frame.maxY + 10,
-                    width: self.writeButton.frame.width,
-                    height: self.writeButton.frame.height)
-                
-                self.scrollView.frame = CGRect(
-                    x: self.scrollView.frame.minX,
-                    y: self.writeButton.frame.maxY + 10,
-                    width: self.scrollView.frame.width,
-                    height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
-                
-                self.imageView.frame = CGRect(
-                    x: self.scrollView.frame.minX,
-                    y: self.scrollView.frame.minY,
-                    width: self.imageView.frame.width,
-                    height: self.scrollView.frame.maxY * 3/5)
-                
-                self.textView.frame = CGRect(
-                    x: self.textView.frame.minX,
-                    y: self.imageView.frame.maxY + 10,
-                    width: self.textView.frame.width,
-                    height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
+                self.ChangedLayout()
             }, completion: nil)
             isHidden.toggle()
         } else {
@@ -296,42 +300,7 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         writeButton.setTitle("기록하기", for: .normal)
         
-        labelStack.frame = CGRect(
-            x: self.view.layoutMarginsGuide.layoutFrame.minX,
-            y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
-            width: self.labelStack.frame.width,
-            height: self.labelStack.frame.height)
-        
-        writeButton.frame = CGRect(
-            x: self.view.layoutMarginsGuide.layoutFrame.minX,
-            y: self.labelStack.frame.maxY + 10,
-            width: self.writeButton.frame.width,
-            height: self.writeButton.frame.height)
-        
-        scrollView.frame = CGRect(
-            x: self.scrollView.frame.minX,
-            y: self.writeButton.frame.maxY + 10,
-            width: self.scrollView.frame.width,
-            height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
-        
-        imageView.frame = CGRect(
-            x: self.scrollView.frame.minX,
-            y: self.scrollView.frame.minY,
-            width: self.imageView.frame.width,
-            height: self.scrollView.frame.maxY * 3/5)
-        
-        textView.frame = CGRect(
-            x: self.textView.frame.minX,
-            y: self.imageView.frame.maxY + 10,
-            width: self.textView.frame.width,
-            height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
-    }
-    
-    private func changeTheme() {
-        dateLabel.textColor = Theme.dateLabel
-        mainLabel.textColor = Theme.mainLabel
-        writeButton.backgroundColor = Theme.writeButton
-        writeButton.titleLabel?.textColor = Theme.buttonText
+        ChangedLayout()
     }
     
     private func imagePickerCancelDidtap() {
@@ -341,40 +310,9 @@ class ViewController: UIViewController {
         configureDefaultImageView()
         writeButton.setTitle("기록하기", for: .normal)
         
-        labelStack.frame = CGRect(
-            x: self.view.layoutMarginsGuide.layoutFrame.minX,
-            y: self.view.layoutMarginsGuide.layoutFrame.minY + 10,
-            width: self.labelStack.frame.width,
-            height: self.labelStack.frame.height)
-        
-        writeButton.frame = CGRect(
-            x: self.view.layoutMarginsGuide.layoutFrame.minX,
-            y: self.labelStack.frame.maxY + 10,
-            width: self.writeButton.frame.width,
-            height: self.writeButton.frame.height)
-        
-        scrollView.frame = CGRect(
-            x: self.scrollView.frame.minX,
-            y: self.writeButton.frame.maxY + 10,
-            width: self.scrollView.frame.width,
-            height: self.view.frame.maxY - self.writeButton.frame.maxY - 15)
-        
-        imageView.frame = CGRect(
-            x: self.scrollView.frame.minX,
-            y: self.scrollView.frame.minY,
-            width: self.imageView.frame.width,
-            height: self.scrollView.frame.maxY * 3/5)
-        
-        textView.frame = CGRect(
-            x: self.textView.frame.minX,
-            y: self.imageView.frame.maxY + 10,
-            width: self.textView.frame.width,
-            height: self.view.frame.maxY - self.imageView.frame.maxY - 15)
+        ChangedLayout()
     }
     
-    
-    
-    // MARK: - Action method
     @objc private func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -150
         textViewLabel.isHidden = true
@@ -395,6 +333,13 @@ class ViewController: UIViewController {
     private func clearImageViewAndTextView() {
         imageView.image = nil
         textView.text = nil
+    }
+    
+    private func changeTheme() {
+        dateLabel.textColor = Theme.dateLabel
+        mainLabel.textColor = Theme.mainLabel
+        writeButton.backgroundColor = Theme.writeButton
+        writeButton.titleLabel?.textColor = Theme.buttonText
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     // MARK: - Properties
-    var savedData : MemoData?
+    var savedData: MemoData?
     let contents = UITextView()
     let imageView = UIImageView()
     let registerDateLabel = UILabel()

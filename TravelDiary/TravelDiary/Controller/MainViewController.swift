@@ -17,6 +17,9 @@ final class MainViewController: UIViewController {
     private let refreshButton = UIButton()
     private let bottomView = UIView()
     private let writeButton = UIButton()
+    private let stackView = UIStackView()
+    private let logoImageView = UIImageView()
+    private let titleLabel = UILabel()
     var selectedItems = [YPMediaItem]()
     
     private enum UI {
@@ -53,8 +56,19 @@ final class MainViewController: UIViewController {
         writeButton.setImage(UIImage(named: "writeButton"), for: .normal)
         writeButton.addTarget(self, action: #selector(writeButtonDidTap(_:)), for: .touchUpInside)
         
+        logoImageView.image = UIImage(named: "travelDiary")
+        titleLabel.text = "Travel Log"
+        titleLabel.textColor = #colorLiteral(red: 0.2030595243, green: 0.5943211913, blue: 0.859213531, alpha: 1)
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 0
+        
         view.addSubview(topNavigationView)
         topNavigationView.addSubview(refreshButton)
+        topNavigationView.addSubview(stackView)
+        stackView.addArrangedSubview(logoImageView)
+        stackView.addArrangedSubview(titleLabel)
         view.addSubview(bottomView)
         bottomView.addSubview(writeButton)
     }
@@ -71,6 +85,11 @@ final class MainViewController: UIViewController {
         refreshButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         refreshButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         refreshButton.trailingAnchor.constraint(equalTo: topNavigationView.trailingAnchor, constant: -20).isActive = true
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

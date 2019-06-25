@@ -37,6 +37,7 @@ class WriteViewController: UIViewController {
         view.backgroundColor = .white
         topNavigationView.backgroundColor = .white
         selectedImageView.contentMode = .scaleAspectFit
+        selectedImageView.image = UIImage(named: "IU")
         
         backButton.setImage(UIImage(named: "back"), for: .normal)
         backButton.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)

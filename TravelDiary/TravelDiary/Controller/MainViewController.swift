@@ -29,7 +29,7 @@ final class MainViewController: UIViewController {
     }
     
     let layout = UICollectionViewFlowLayout()
-    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - (190))), collectionViewLayout: layout)
+    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - (170))), collectionViewLayout: layout)
     
     
     // MARK: - View Life Cycle
@@ -48,7 +48,7 @@ final class MainViewController: UIViewController {
         refreshButton.setImage(UIImage(named: "changeView"), for: .normal)
         refreshButton.addTarget(self, action: #selector(changeCollectionViewDirection(_:)), for: .touchUpInside)
         
-        bottomView.backgroundColor = .white
+        bottomView.backgroundColor = UIColor.clear
         
         writeButton.setImage(UIImage(named: "writeButton"), for: .normal)
         writeButton.addTarget(self, action: #selector(writeButtonDidTap(_:)), for: .touchUpInside)

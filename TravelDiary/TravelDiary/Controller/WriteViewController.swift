@@ -86,14 +86,14 @@ class WriteViewController: UIViewController {
         
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         backButton.leadingAnchor.constraint(equalTo: topNavigationView.leadingAnchor, constant: 20).isActive = true
         
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        saveButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        saveButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         saveButton.trailingAnchor.constraint(equalTo: topNavigationView.trailingAnchor, constant: -20).isActive = true
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false

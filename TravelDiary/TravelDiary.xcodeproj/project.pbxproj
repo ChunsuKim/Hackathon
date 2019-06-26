@@ -19,6 +19,7 @@
 		F300FB8C22C1FE3900EDA9B0 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */; };
 		F3C366A122C342A300117B11 /* CustomTapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A022C342A300117B11 /* CustomTapBarController.swift */; };
 		F3C366A322C343D900117B11 /* MyLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A222C343D900117B11 /* MyLogViewController.swift */; };
+		F3C366A522C3640C00117B11 /* MyLogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A422C3640C00117B11 /* MyLogCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		F3C366A022C342A300117B11 /* CustomTapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTapBarController.swift; sourceTree = "<group>"; };
 		F3C366A222C343D900117B11 /* MyLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogViewController.swift; sourceTree = "<group>"; };
+		F3C366A422C3640C00117B11 /* MyLogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCB818DF83FB67B7EEC8D9B8 /* Pods_TravelDiary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TravelDiary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				F300FB8922C1CEEA00EDA9B0 /* MainCollectionViewCell.swift */,
+				F3C366A422C3640C00117B11 /* MyLogCollectionViewCell.swift */,
 				F3C366A022C342A300117B11 /* CustomTapBarController.swift */,
 			);
 			path = View;
@@ -124,8 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				F300FB7122C1C00100EDA9B0 /* MainViewController.swift */,
-				F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */,
 				F3C366A222C343D900117B11 /* MyLogViewController.swift */,
+				F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				F300FB7822C1C00100EDA9B0 /* TravelDiary.xcdatamodeld in Sources */,
 				F3C366A322C343D900117B11 /* MyLogViewController.swift in Sources */,
 				F300FB8A22C1CEEA00EDA9B0 /* MainCollectionViewCell.swift in Sources */,
+				F3C366A522C3640C00117B11 /* MyLogCollectionViewCell.swift in Sources */,
 				F300FB8622C1C0ED00EDA9B0 /* DataClass.swift in Sources */,
 				F3C366A122C342A300117B11 /* CustomTapBarController.swift in Sources */,
 				F300FB7022C1C00100EDA9B0 /* AppDelegate.swift in Sources */,

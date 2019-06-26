@@ -28,7 +28,7 @@ final class MainViewController: UIViewController {
     }
     
     let layout = UICollectionViewFlowLayout()
-    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100)), collectionViewLayout: layout)
+    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - 80)), collectionViewLayout: layout)
     
     
     // MARK: - View Life Cycle

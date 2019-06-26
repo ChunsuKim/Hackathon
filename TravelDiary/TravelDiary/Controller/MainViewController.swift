@@ -15,10 +15,6 @@ final class MainViewController: UIViewController {
     // MARK: - Properties
     private let topNavigationView = UIView()
     private let refreshButton = UIButton()
-    private let bottomView = UIView()
-    private let writeButton = UIButton()
-    private let stackView = UIStackView()
-    private let logoImageView = UIImageView()
     private let titleLabel = UILabel()
     var selectedItems = [YPMediaItem]()
     
@@ -32,7 +28,7 @@ final class MainViewController: UIViewController {
     }
     
     let layout = UICollectionViewFlowLayout()
-    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - (170))), collectionViewLayout: layout)
+    lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100)), collectionViewLayout: layout)
     
     
     // MARK: - View Life Cycle
@@ -51,26 +47,14 @@ final class MainViewController: UIViewController {
         refreshButton.setImage(UIImage(named: "changeView"), for: .normal)
         refreshButton.addTarget(self, action: #selector(changeCollectionViewDirection(_:)), for: .touchUpInside)
         
-        bottomView.backgroundColor = UIColor.clear
-        
-        writeButton.setImage(UIImage(named: "writeButton"), for: .normal)
-        writeButton.addTarget(self, action: #selector(writeButtonDidTap(_:)), for: .touchUpInside)
-        
-        logoImageView.image = UIImage(named: "travelDiary")
         titleLabel.text = "Travel Log"
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont(name: "Snell Roundhand", size: 30)
         titleLabel.textColor = #colorLiteral(red: 0.2030595243, green: 0.5943211913, blue: 0.859213531, alpha: 1)
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = 0
         
         view.addSubview(topNavigationView)
         topNavigationView.addSubview(refreshButton)
-        topNavigationView.addSubview(stackView)
-        stackView.addArrangedSubview(logoImageView)
-        stackView.addArrangedSubview(titleLabel)
-        view.addSubview(bottomView)
-        bottomView.addSubview(writeButton)
+        topNavigationView.addSubview(titleLabel)
     }
     
     private func configureConstraints() {
@@ -86,22 +70,11 @@ final class MainViewController: UIViewController {
         refreshButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         refreshButton.trailingAnchor.constraint(equalTo: topNavigationView.trailingAnchor, constant: -20).isActive = true
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        bottomView.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: 190).isActive = true
-        
-        writeButton.translatesAutoresizingMaskIntoConstraints = false
-        writeButton.centerXAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        writeButton.centerYAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        writeButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        writeButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        titleLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: 95).isActive = true
     }
     
     // MARK: - configuration collectionView

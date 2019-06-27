@@ -16,7 +16,6 @@ final class MainViewController: UIViewController {
     private let topNavigationView = UIView()
     private let refreshButton = UIButton()
     private let titleLabel = UILabel()
-    var selectedItems = [YPMediaItem]()
     
     private enum UI {
         static let itemsInLine: CGFloat = 2
@@ -30,6 +29,8 @@ final class MainViewController: UIViewController {
     let layout = UICollectionViewFlowLayout()
     lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - 80)), collectionViewLayout: layout)
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    lazy var dao = MemoDAO()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -38,6 +39,13 @@ final class MainViewController: UIViewController {
         configureTopView()
         configureConstraints()
         configureCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // 코어 데이터에 저장된 데이터를 가져온다
+        self.appDelegate.memolist = self.dao.fetch()
+        self.collectionView.reloadData()
     }
     
     // MARK: - configuration UserInterface
@@ -82,6 +90,7 @@ final class MainViewController: UIViewController {
         collectionView.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.identifier)
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.delegate = self
         view.addSubview(collectionView)
         
         configureFlowLayout()
@@ -121,42 +130,63 @@ final class MainViewController: UIViewController {
         configureFlowLayout()
     }
     
-    @objc private func writeButtonDidTap(_ sender: UIButton) {
-        let writeViewController = WriteViewController()
-        var config = YPImagePickerConfiguration()
-        config.startOnScreen = .library
-        config.screens = [.library, .photo]
-        config.showsCrop = .rectangle(ratio: 16/15)
-        config.wordings.libraryTitle = "Travel Log"
-        config.library.maxNumberOfItems = 5
-        let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, _ in
-            
-            self.selectedItems = items
-            writeViewController.selectedImageView.image = items.singlePhoto?.image
-            picker.dismiss(animated: true) {
-                self.present(writeViewController, animated: false)
-            }
-        }
-        present(picker, animated: true)
-    }
-    
 }
 
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        
+        let count = self.appDelegate.memolist.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
-        cell.configureCellContent(image: UIImage(named: "default"), title: "잠실야경")
         
+        // memolist 배열 데이터에서 주어진 행에 맞는 데이터를 꺼냄
+        let item = self.appDelegate.memolist[indexPath.item]
+        
+        // 재사용 큐로부터 프로토타입 셀의 인스턴스를 전달받는다
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
+        
+        // memoCell의 내용을 구성
+        cell.configureCellContent(image: item.image, title: item.title)
+        cell.tag = indexPath.item
+        
+        // Date 타입의 날짜 포맷지정
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        cell.registerDate.text = formatter.string(from: item.registerDate!)
+        
+//        cell.configureCellContent(image: UIImage(named: "default"), title: "잠실야경")
 //        cell.backgroundColor = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
         
         return cell
     }
-    
-    
 }
 
+extension MainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        let item = self.appDelegate.memolist[indexPath.item]
+        detailVC.savedData = item
+        show(detailVC, sender: nil)
+    }
+}
+
+//extension MainViewController: CustomCollectionViewCellDelegate {
+//    func removeCell(_ sender: Int) {
+//        let data = self.appDelegate.memolist[sender]
+//
+//        let alertAction = UIAlertController(title: "정말 삭제하실 건가요?", message: "삭제 후에는 복구 할 수 없습니다.", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "삭제하기", style: .destructive) { (_) in
+//            if self.dao.delete(data.objectID!) {
+//                self.appDelegate.memolist.remove(at: sender)
+//            }
+//            self.collectionView.reloadData()
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+//        alertAction.addAction(okAction)
+//        alertAction.addAction(cancelAction)
+//        present(alertAction, animated: true)
+//    }
+//}

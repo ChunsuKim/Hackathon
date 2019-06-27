@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61203C6022C4E14D00C6D56E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61203C5F22C4E14D00C6D56E /* MapViewController.swift */; };
 		79871F1C403DA827EC42C76D /* Pods_TravelDiary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB818DF83FB67B7EEC8D9B8 /* Pods_TravelDiary.framework */; };
 		F300FB7022C1C00100EDA9B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB6F22C1C00100EDA9B0 /* AppDelegate.swift */; };
 		F300FB7222C1C00100EDA9B0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB7122C1C00100EDA9B0 /* MainViewController.swift */; };
@@ -14,16 +15,19 @@
 		F300FB7822C1C00100EDA9B0 /* TravelDiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F300FB7622C1C00100EDA9B0 /* TravelDiary.xcdatamodeld */; };
 		F300FB7A22C1C00200EDA9B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F300FB7922C1C00200EDA9B0 /* Assets.xcassets */; };
 		F300FB7D22C1C00200EDA9B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F300FB7B22C1C00200EDA9B0 /* LaunchScreen.storyboard */; };
-		F300FB8622C1C0ED00EDA9B0 /* DataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB8522C1C0ED00EDA9B0 /* DataClass.swift */; };
 		F300FB8A22C1CEEA00EDA9B0 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB8922C1CEEA00EDA9B0 /* MainCollectionViewCell.swift */; };
 		F300FB8C22C1FE3900EDA9B0 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */; };
 		F3C366A122C342A300117B11 /* CustomTapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A022C342A300117B11 /* CustomTapBarController.swift */; };
 		F3C366A322C343D900117B11 /* MyLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A222C343D900117B11 /* MyLogViewController.swift */; };
 		F3C366A522C3640C00117B11 /* MyLogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C366A422C3640C00117B11 /* MyLogCollectionViewCell.swift */; };
+		F3F4BCD422C486EA005CA038 /* MemoDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F4BCD322C486EA005CA038 /* MemoDAO.swift */; };
+		F3F4BCD622C48A19005CA038 /* MemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F4BCD522C48A19005CA038 /* MemoData.swift */; };
+		F3F4BCD822C49C3F005CA038 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F4BCD722C49C3F005CA038 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		52F8AEE44277C44DE7BD773B /* Pods-TravelDiary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelDiary.debug.xcconfig"; path = "Target Support Files/Pods-TravelDiary/Pods-TravelDiary.debug.xcconfig"; sourceTree = "<group>"; };
+		61203C5F22C4E14D00C6D56E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		E80E526080885E81C06108D9 /* Pods-TravelDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelDiary.release.xcconfig"; path = "Target Support Files/Pods-TravelDiary/Pods-TravelDiary.release.xcconfig"; sourceTree = "<group>"; };
 		F300FB6C22C1C00100EDA9B0 /* TravelDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F300FB6F22C1C00100EDA9B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,12 +37,14 @@
 		F300FB7922C1C00200EDA9B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F300FB7C22C1C00200EDA9B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F300FB7E22C1C00200EDA9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F300FB8522C1C0ED00EDA9B0 /* DataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClass.swift; sourceTree = "<group>"; };
 		F300FB8922C1CEEA00EDA9B0 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		F3C366A022C342A300117B11 /* CustomTapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTapBarController.swift; sourceTree = "<group>"; };
 		F3C366A222C343D900117B11 /* MyLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogViewController.swift; sourceTree = "<group>"; };
 		F3C366A422C3640C00117B11 /* MyLogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3F4BCD322C486EA005CA038 /* MemoDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDAO.swift; sourceTree = "<group>"; };
+		F3F4BCD522C48A19005CA038 /* MemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoData.swift; sourceTree = "<group>"; };
+		F3F4BCD722C49C3F005CA038 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FCB818DF83FB67B7EEC8D9B8 /* Pods_TravelDiary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TravelDiary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -108,7 +114,8 @@
 		F300FB8422C1C0BC00EDA9B0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				F300FB8522C1C0ED00EDA9B0 /* DataClass.swift */,
+				F3F4BCD322C486EA005CA038 /* MemoDAO.swift */,
+				F3F4BCD522C48A19005CA038 /* MemoData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -129,6 +136,8 @@
 				F300FB7122C1C00100EDA9B0 /* MainViewController.swift */,
 				F3C366A222C343D900117B11 /* MyLogViewController.swift */,
 				F300FB8B22C1FE3900EDA9B0 /* WriteViewController.swift */,
+				F3F4BCD722C49C3F005CA038 /* DetailViewController.swift */,
+				61203C5F22C4E14D00C6D56E /* MapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,13 +257,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3F4BCD822C49C3F005CA038 /* DetailViewController.swift in Sources */,
 				F300FB8C22C1FE3900EDA9B0 /* WriteViewController.swift in Sources */,
+				F3F4BCD622C48A19005CA038 /* MemoData.swift in Sources */,
 				F300FB7222C1C00100EDA9B0 /* MainViewController.swift in Sources */,
+				F3F4BCD422C486EA005CA038 /* MemoDAO.swift in Sources */,
 				F300FB7822C1C00100EDA9B0 /* TravelDiary.xcdatamodeld in Sources */,
 				F3C366A322C343D900117B11 /* MyLogViewController.swift in Sources */,
+				61203C6022C4E14D00C6D56E /* MapViewController.swift in Sources */,
 				F300FB8A22C1CEEA00EDA9B0 /* MainCollectionViewCell.swift in Sources */,
 				F3C366A522C3640C00117B11 /* MyLogCollectionViewCell.swift in Sources */,
-				F300FB8622C1C0ED00EDA9B0 /* DataClass.swift in Sources */,
 				F3C366A122C342A300117B11 /* CustomTapBarController.swift in Sources */,
 				F300FB7022C1C00100EDA9B0 /* AppDelegate.swift in Sources */,
 			);

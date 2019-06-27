@@ -60,6 +60,4 @@ class MyLogCollectionViewCell: UICollectionViewCell {
         imageView.image = image
         titleLabel.text = title
     }
-    
-
 }

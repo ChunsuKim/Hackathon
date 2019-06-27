@@ -11,8 +11,8 @@ import UIKit
 final class MainCollectionViewCell: UICollectionViewCell {
     static let identifier = "MainCollectionViewCell"
     
-    private let imageView = UIImageView()
-    private let titleLabel = UILabel()
+    private let mainCellImageView = UIImageView()
+    private let mainCellTitleLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,36 +30,35 @@ final class MainCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 20
         
         // imageView
-        imageView.contentMode = .scaleAspectFill
-        contentView.addSubview(imageView)
+        mainCellImageView.contentMode = .scaleAspectFill
+        contentView.addSubview(mainCellImageView)
         
         // titleLabel
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = .white
-        titleLabel.backgroundColor = .black
-//        titleLabel.text = "잠실야경"
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        contentView.addSubview(titleLabel)
+        mainCellTitleLabel.textAlignment = .center
+        mainCellTitleLabel.textColor = .white
+        mainCellTitleLabel.backgroundColor = .black
+        mainCellTitleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        contentView.addSubview(mainCellTitleLabel)
     }
     
     private func configureConstraints() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        mainCellImageView.translatesAutoresizingMaskIntoConstraints = false
+        mainCellImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        mainCellImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        mainCellImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
-        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        mainCellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainCellTitleLabel.topAnchor.constraint(equalTo: mainCellImageView.bottomAnchor).isActive = true
+        mainCellTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        mainCellTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        mainCellTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        mainCellTitleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        mainCellTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
     }
     
-    func configureCellContent(image: UIImage?, title: String) {
-        imageView.image = image
-        titleLabel.text = title
+    func configureCellContent(image: UIImage?, title: String?) {
+        mainCellImageView.image = image
+        mainCellTitleLabel.text = title
     }
     
 }

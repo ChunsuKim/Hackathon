@@ -11,11 +11,12 @@ import MapKit
 import UIKit
 
 class MapViewController: UIViewController {
-//    let writeVC = WriteViewController()
+    
+    // MARK: - Properties
     lazy var tempLocation = ""
     
-    let textFiled = UITextField()
-    let removeButton = UIButton(type: .system)
+    private let textFiled = UITextField()
+    private let removeButton = UIButton(type: .system)
     private let dismissButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,16 +35,18 @@ class MapViewController: UIViewController {
     private var exPoint: [CLLocationCoordinate2D] = []
     private let locationManager = CLLocationManager()
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
-        autoLayout()
+        configureMapView()
+        configureConstraints()
         checkAuthorizationStatus()
         
     }
     
-    func configure() {
+    // MARK: - configuration MapView
+    private func configureMapView() {
         view.backgroundColor = .white
         textFiled.font = UIFont.systemFont(ofSize: 20)
         textFiled.textAlignment = .left
@@ -74,7 +77,7 @@ class MapViewController: UIViewController {
         
     }
     
-    func checkAuthorizationStatus() {
+    private func checkAuthorizationStatus() {
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -89,7 +92,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    func autoLayout() {
+    private func configureConstraints() {
         dismissButton.centerYAnchor.constraint(equalTo: textFiled.centerYAnchor).isActive = true
         dismissButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -119,7 +122,26 @@ class MapViewController: UIViewController {
         removeButton.centerXAnchor.constraint(equalTo: textFiled.centerXAnchor).isActive = true
     }
     
-    @objc func textFieldShouldReturn(_ sender: UITextField) {
+    private func setRegion(coordinate: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+        
+        exPoint.append(coordinate)
+        addAnnotation(coordinate)
+        print(exPoint)
+    }
+    
+    private func addAnnotation(_ sender: CLLocationCoordinate2D) {
+        
+        let placePoint = MKPointAnnotation()
+        placePoint.title = "Marking place \(exPoint.count)"
+        placePoint.coordinate = sender
+        mapView.addAnnotation(placePoint)
+    }
+    
+    // MARK: - Action Method
+    @objc private func textFieldShouldReturn(_ sender: UITextField) {
         
         let geocoder = CLGeocoder()
         let location = textFiled.text!
@@ -139,20 +161,20 @@ class MapViewController: UIViewController {
         sender.resignFirstResponder()
     }
     
-    @objc func removeOverlays(_ sender: UIButton) {
+    @objc private func removeOverlays(_ sender: UIButton) {
         mapView.removeOverlays(mapView.overlays)
         mapView.removeAnnotations(mapView.annotations)
         exPoint = []
     }
     
-    @objc func dismissButtonEvent(_ sender: UIButton) {
+    @objc private func dismissButtonEvent(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
     
-    @objc func checkButtonEvent(_ sender: UIButton) {
+    @objc private func checkButtonEvent(_ sender: UIButton) {
         guard let vc = presentingViewController as? CustomTapBarController else { return }
         if !textFiled.text!.isEmpty {
-            vc.thirdTab.location.text = self.textFiled.text!
+            vc.thirdTab.locationLabel.text = self.textFiled.text!
             
             presentingViewController?.dismiss(animated: true)
         } else {
@@ -162,41 +184,5 @@ class MapViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "확인", style: .default))
             self.present(alert, animated: true)
         }
-    }
-    
-    
-    func setRegion(coordinate: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        mapView.setRegion(region, animated: true)
-        
-        exPoint.append(coordinate)
-        addAnnotation(coordinate)
-        print(exPoint)
-    }
-    
-    func addAnnotation(_ sender: CLLocationCoordinate2D) {
-        
-        let placePoint = MKPointAnnotation()
-        placePoint.title = "Marking place \(exPoint.count)"
-        placePoint.coordinate = sender
-        mapView.addAnnotation(placePoint)
-        
-        let center = sender
-        
-        var point1 = center; point1.longitude -= 0.0015; point1.latitude += 0.0015
-        var point2 = center; point2.longitude += 0.0015; point2.latitude += 0.0015
-        var point3 = center; point3.longitude += 0.0015; point3.latitude -= 0.0015
-        var point4 = center; point4.longitude -= 0.0015; point4.latitude -= 0.0015
-        
-        let points: [CLLocationCoordinate2D] = [point1, point2, point3, point4, point1]
-        
-        let square = MKPolyline(coordinates: points, count: points.count)
-        
-        let polyline = MKPolyline(coordinates: exPoint, count: exPoint.count)
-        
-        
-        mapView.addOverlay(square)
-        mapView.addOverlay(polyline)
     }
 }

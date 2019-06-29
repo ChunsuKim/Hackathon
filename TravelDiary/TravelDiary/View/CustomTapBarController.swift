@@ -10,7 +10,7 @@ import UIKit
 
 class CustomTapBarController: UITabBarController {
     
-    let tabBarItemQuantity = 3
+    let tabBarItemQuantity = 4
     
     let thirdTab = WriteViewController()
 

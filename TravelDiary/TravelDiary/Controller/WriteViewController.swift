@@ -31,7 +31,7 @@ class WriteViewController: UIViewController {
     private let lastDateLabel = UILabel()
     private let lastDateTextField = UITextField()
     private let locationTitleLabel = UILabel()
-    private let locationLabel = UILabel()
+    let locationLabel = UILabel()
     private let mapButton = UIButton(type: .system)
     
     private let textView = UITextView()

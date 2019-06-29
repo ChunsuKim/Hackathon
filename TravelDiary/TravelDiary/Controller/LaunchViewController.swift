@@ -73,7 +73,7 @@ final class LaunchViewController: UIViewController {
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: "Snell Roundhand", size: 30)
         activityIndicatorView.color = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-        statusLabel.text = "날씨정보를 받아오는 중입니다!"
+        statusLabel.text = "데이터를 불러오는 중입니다!"
         statusLabel.textColor = .white
         statusLabel.textAlignment = .center
         statusLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)

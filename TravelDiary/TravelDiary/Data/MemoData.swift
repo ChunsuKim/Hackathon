@@ -15,8 +15,9 @@ class MemoData {
     var contents: String?   // 메모 내용
     var image: UIImage? // 이미지
     var registerDate: Date? // 작성일
-    var sDate: Date?
-    var eDate: Date?
+    var location: String?   // 장소
+    var sDate: Date?    // 여행시작일
+    var eDate: Date?    // 여행마지막일
     
     var objectID: NSManagedObjectID?
     

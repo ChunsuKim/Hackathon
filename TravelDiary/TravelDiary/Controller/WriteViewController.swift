@@ -12,80 +12,36 @@ import Photos
 
 class WriteViewController: UIViewController {
     
-    var datePicker : UIDatePicker!
-    
-    var sDate = Date()
-    var eDate = Date()
-    
+    // MARK: - Properties
     private let topNavigationView = UIView()
     private let backButton = UIButton()
     private let saveButton = UIButton()
+    private let topLabel = UILabel()
+    
     private let scrollView = UIScrollView()
+    private let selectedImageView = UIImageView()
+    private let infoImageViewLabel = UILabel()
+    
+    private let dateView = UIView()
+    private var datePicker : UIDatePicker!
+    private var sDate = Date()
+    private var eDate = Date()
+    private let firstDateLabel = UILabel()
+    private let firstDateTextField = UITextField()
+    private let lastDateLabel = UILabel()
+    private let lastDateTextField = UITextField()
+    private let locationTitleLabel = UILabel()
+    private let locationLabel = UILabel()
+    private let mapButton = UIButton(type: .system)
+    
     private let textView = UITextView()
     private let textViewLabel = UILabel()
-    let selectedImageView = UIImageView()
     
-    let dateView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    let firstDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "여행시작 :"
-        
-        return label
-    }()
-    
-    let firstDateTF: UITextField = {
-        let textField = UITextField()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "01 Jan 2019"
-        
-        return textField
-    }()
-    
-    let lastDateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "여행끝 :"
-        
-        return label
-    }()
-    
-    let lastDateTF: UITextField = {
-        let textField = UITextField()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "01 Jan 2019"
-        
-        return textField
-    }()
-    
-    let locationTitle: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "여행지 :"
-        
-        return label
-    }()
-    
-    let location: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "여행지를 선택해주세요"
-        
-        return label
-    }()
-  
     var subject: String?
     var selectedItems = [YPMediaItem]()
     lazy var dao = MemoDAO()
 
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,23 +51,49 @@ class WriteViewController: UIViewController {
         configureNotificationForKeyboard()
     }
     
+    // MARK: - configuration User Interface
     private func configureViews() {
+        // View configuration
         view.backgroundColor = .white
-        topNavigationView.backgroundColor = .white
-        selectedImageView.contentMode = .scaleAspectFit
-        selectedImageView.image = UIImage(named: "IU")
-        let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewDidTap(_:)))
-        selectedImageView.isUserInteractionEnabled = true
-        selectedImageView.addGestureRecognizer(imageTapGesture)
         
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
+        // Top navigation view configuration
+        topNavigationView.backgroundColor = .white
+        backButton.setImage(UIImage(named: "reset"), for: .normal)
+        backButton.addTarget(self, action: #selector(resetButtonDidTap(_:)), for: .touchUpInside)
         
         saveButton.setImage(UIImage(named: "save"), for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonDidTap(_:)), for: .touchUpInside)
         
-        firstDateTF.delegate = self
-        lastDateTF.delegate = self
+        topLabel.text = "Write your travel log"
+        topLabel.textAlignment = .center
+        topLabel.font = UIFont(name: "Snell Roundhand", size: 30)
+        topLabel.textColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
+        // ImageView configuration
+        selectedImageView.contentMode = .scaleAspectFit
+        selectedImageView.image = UIImage(named: "IU")
+        let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(touchGestureForImageView(_:)))
+        selectedImageView.isUserInteractionEnabled = true
+        selectedImageView.addGestureRecognizer(imageTapGesture)
+        
+        infoImageViewLabel.text = "IU님 사진을 터치하시면 이미지를 넣을 수 있습니다."
+        infoImageViewLabel.textColor = #colorLiteral(red: 0.5004553199, green: 0.6069974899, blue: 1, alpha: 1)
+        infoImageViewLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        infoImageViewLabel.textAlignment = .center
+        
+        // Date and Location UI configuration
+        firstDateLabel.text = "여행시작 :"
+        lastDateLabel.text = "여행끝 :"
+        firstDateTextField.placeholder = "01 Jan 2019"
+        firstDateTextField.delegate = self
+        lastDateTextField.placeholder = "01 Jan 2019"
+        lastDateTextField.delegate = self
+        locationTitleLabel.text = "여행지 :"
+        locationLabel.text = "여행지를 선택해주세요"
+        mapButton.setBackgroundImage(#imageLiteral(resourceName: "map"), for: .normal)
+        mapButton.addTarget(self, action: #selector(mapButtonDidTap(_:)), for: .touchUpInside)
+        
+        // TextView configuration
         textView.delegate = self
         textView.font = UIFont.italicSystemFont(ofSize: 20)
         textView.layer.cornerRadius = 10
@@ -120,33 +102,36 @@ class WriteViewController: UIViewController {
         textView.clipsToBounds = true
         
         configureTextViewLabel()
+//        locationLabelInputText()
         
+        // addSubview
         view.addSubview(topNavigationView)
         topNavigationView.addSubview(backButton)
         topNavigationView.addSubview(saveButton)
+        topNavigationView.addSubview(topLabel)
+        
         view.addSubview(scrollView)
         scrollView.addSubview(selectedImageView)
-        scrollView.addSubview(textView)
+        selectedImageView.addSubview(infoImageViewLabel)
+        
         scrollView.addSubview(dateView)
         dateView.addSubview(firstDateLabel)
-        dateView.addSubview(firstDateTF)
+        dateView.addSubview(firstDateTextField)
         dateView.addSubview(lastDateLabel)
-        dateView.addSubview(lastDateTF)
-        dateView.addSubview(locationTitle)
-        dateView.addSubview(location)
-
-        textView.addSubview(textViewLabel)
+        dateView.addSubview(lastDateTextField)
+        dateView.addSubview(locationTitleLabel)
+        dateView.addSubview(locationLabel)
+        dateView.addSubview(mapButton)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapFunction(_:)))
-        location.addGestureRecognizer(tapGesture)
-        location.isUserInteractionEnabled = true
+        scrollView.addSubview(textView)
+        textView.addSubview(textViewLabel)
     }
     
     private func configureCustomKeyboard() {
         let toolBarKeyboard = UIToolbar()
         toolBarKeyboard.sizeToFit()
         let buttonflexBar = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let buttonDoneBar = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(self.doneButtonClicked(_sender:)))
+        let buttonDoneBar = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(self.keyboardDoneButtonClicked(_sender:)))
         toolBarKeyboard.items = [buttonflexBar, buttonDoneBar]
         toolBarKeyboard.tintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         textView.inputAccessoryView = toolBarKeyboard
@@ -161,70 +146,6 @@ class WriteViewController: UIViewController {
         textViewLabel.isHidden = false
     }
     
-    func pickUpDate(_ textField : UITextField){
-        
-        // DatePicker
-        self.datePicker = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
-        self.datePicker.backgroundColor = UIColor.white
-        self.datePicker.datePickerMode = .date
-        textField.inputView = self.datePicker
-        
-        // ToolBar
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
-        toolBar.sizeToFit()
-        
-        // Adding Button ToolBar
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneClick))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelClick))
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        textField.inputAccessoryView = toolBar
-        
-    }
-    
-    @objc func doneClick() {
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateStyle = .medium
-        dateFormatter1.timeStyle = .none
-        if firstDateTF.isEditing {
-            sDate = datePicker.date
-            firstDateTF.text = dateFormatter1.string(from: datePicker.date)
-            firstDateTF.resignFirstResponder()
-            
-            let startDate = sDate
-            let endDate = eDate
-            let diffDate = endDate.timeIntervalSince(startDate)
-            let days = Int(diffDate / 86400)
-            print("\(days)일만큼 차이납니다.")
-        } else {
-            eDate = datePicker.date
-            lastDateTF.text = dateFormatter1.string(from: datePicker.date)
-            lastDateTF.resignFirstResponder()
-            
-            let startDate = sDate
-            let endDate = eDate
-            let diffDate = endDate.timeIntervalSince(startDate)
-            let days = Int(diffDate / 86400)
-            print("\(days)일만큼 차이납니다.")
-        }
-    }
-    @objc func cancelClick() {
-        if firstDateTF.isEditing {
-            firstDateTF.resignFirstResponder()
-        } else {
-            lastDateTF.resignFirstResponder()
-        }
-    }
-    
-    private func configureNotificationForKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     private func configureConstraints() {
         topNavigationView.translatesAutoresizingMaskIntoConstraints = false
         topNavigationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -237,6 +158,12 @@ class WriteViewController: UIViewController {
         backButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         backButton.leadingAnchor.constraint(equalTo: topNavigationView.leadingAnchor, constant: 20).isActive = true
+        
+        topLabel.translatesAutoresizingMaskIntoConstraints = false
+        topLabel.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        topLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor).isActive = true
+        topLabel.trailingAnchor.constraint(equalTo: saveButton.leadingAnchor).isActive = true
+        topLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.centerYAnchor.constraint(equalTo: topNavigationView.safeAreaLayoutGuide.centerYAnchor).isActive = true
@@ -256,6 +183,12 @@ class WriteViewController: UIViewController {
         selectedImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         selectedImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.45).isActive = true
         
+        infoImageViewLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoImageViewLabel.topAnchor.constraint(equalTo: selectedImageView.topAnchor).isActive = true
+        infoImageViewLabel.leadingAnchor.constraint(equalTo: selectedImageView.leadingAnchor).isActive = true
+        infoImageViewLabel.trailingAnchor.constraint(equalTo: selectedImageView.trailingAnchor).isActive = true
+        infoImageViewLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 10).isActive = true
         textView.centerXAnchor.constraint(equalTo: dateView.centerXAnchor).isActive = true
@@ -268,23 +201,71 @@ class WriteViewController: UIViewController {
         textViewLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         textViewLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
         
+        dateView.translatesAutoresizingMaskIntoConstraints = false
         dateView.topAnchor.constraint(equalTo: selectedImageView.bottomAnchor, constant: 10).isActive = true
         dateView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dateView.widthAnchor.constraint(equalToConstant: 350).isActive = true
         dateView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        firstDateLabel.translatesAutoresizingMaskIntoConstraints = false
         firstDateLabel.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
         firstDateLabel.leadingAnchor.constraint(equalTo: dateView.leadingAnchor).isActive = true
-        firstDateTF.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
-        firstDateTF.leadingAnchor.constraint(equalTo: firstDateLabel.trailingAnchor, constant: 10).isActive = true
+        
+        firstDateTextField.translatesAutoresizingMaskIntoConstraints = false
+        firstDateTextField.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
+        firstDateTextField.leadingAnchor.constraint(equalTo: firstDateLabel.trailingAnchor, constant: 10).isActive = true
+        
+        lastDateLabel.translatesAutoresizingMaskIntoConstraints = false
         lastDateLabel.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
-        lastDateLabel.leadingAnchor.constraint(equalTo: firstDateTF.trailingAnchor, constant: 15).isActive = true
-        lastDateTF.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
-        lastDateTF.leadingAnchor.constraint(equalTo: lastDateLabel.trailingAnchor, constant: 10).isActive = true
-        locationTitle.bottomAnchor.constraint(equalTo: dateView.bottomAnchor).isActive = true
-        locationTitle.leadingAnchor.constraint(equalTo: dateView.leadingAnchor).isActive = true
-        location.bottomAnchor.constraint(equalTo: dateView.bottomAnchor).isActive = true
-        location.leadingAnchor.constraint(equalTo: locationTitle.trailingAnchor, constant: 10).isActive = true
+        lastDateLabel.leadingAnchor.constraint(equalTo: firstDateTextField.trailingAnchor, constant: 15).isActive = true
+        
+        lastDateTextField.translatesAutoresizingMaskIntoConstraints = false
+        lastDateTextField.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
+        lastDateTextField.leadingAnchor.constraint(equalTo: lastDateLabel.trailingAnchor, constant: 10).isActive = true
+        
+        locationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationTitleLabel.bottomAnchor.constraint(equalTo: dateView.bottomAnchor).isActive = true
+        locationTitleLabel.leadingAnchor.constraint(equalTo: dateView.leadingAnchor).isActive = true
+        
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.bottomAnchor.constraint(equalTo: dateView.bottomAnchor).isActive = true
+        locationLabel.leadingAnchor.constraint(equalTo: locationTitleLabel.trailingAnchor, constant: 10).isActive = true
+        
+        mapButton.translatesAutoresizingMaskIntoConstraints = false
+        mapButton.centerYAnchor.constraint(equalTo: locationLabel.centerYAnchor).isActive = true
+        mapButton.leadingAnchor.constraint(equalTo: locationLabel.trailingAnchor, constant: 10).isActive = true
+        mapButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        mapButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+    }
+    
+    private func pickUpDate(_ textField : UITextField){
+        
+        // DatePicker
+        self.datePicker = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.datePicker.backgroundColor = UIColor.white
+        self.datePicker.datePickerMode = .date
+        textField.inputView = self.datePicker
+        
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(datePickerDoneButtonDidTap))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(datePickerCancelButtonDidTap))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolBar
+        
+    }
+    
+    private func configureNotificationForKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func textViewLabelShow() {
@@ -295,13 +276,25 @@ class WriteViewController: UIViewController {
         }
     }
     
+    private func showImageViewLabelInitialConfiguration() {
+        infoImageViewLabel.text = "IU님 사진을 터치하시면 이미지를 넣을 수 있습니다."
+        infoImageViewLabel.textColor = #colorLiteral(red: 0.5004553199, green: 0.6069974899, blue: 1, alpha: 1)
+        infoImageViewLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        infoImageViewLabel.textAlignment = .center
+        infoImageViewLabel.isHidden = false
+    }
+    
+    private func hideImageViewLabel() {
+        infoImageViewLabel.isHidden = true
+    }
+    
     private func saveUserInputData() {
         print("save")
         
         guard
             self.textView.text?.isEmpty == false &&
-            self.firstDateTF.text?.isEmpty == false &&
-            self.lastDateTF.text?.isEmpty == false else {
+            self.firstDateTextField.text?.isEmpty == false &&
+            self.lastDateTextField.text?.isEmpty == false else {
             let alert = UIAlertController(title: "내용을 입력해주세요", message: "내용을 입력하지 않으면 저장이 되지 않습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
@@ -316,13 +309,15 @@ class WriteViewController: UIViewController {
         data.contents = self.textView.text
         data.image = self.selectedImageView.image
         data.registerDate = Date()
+        data.location = locationLabel.text
         data.sDate = sDate
         data.eDate = eDate
         
         self.dao.insert(data)
     }
     
-    @objc private func imageViewDidTap(_ sender: UIImageView) {
+    // MARK: - Action Methods
+    @objc private func touchGestureForImageView(_ sender: UIImageView) {
         var config = YPImagePickerConfiguration()
         config.startOnScreen = .library
         config.screens = [.library, .photo]
@@ -334,21 +329,81 @@ class WriteViewController: UIViewController {
             
             self.selectedItems = items
             self.selectedImageView.image = items.singlePhoto?.image
-            picker.dismiss(animated: false)
+            picker.dismiss(animated: false) {
+                self.hideImageViewLabel()
+            }
         }
-        present(picker, animated: false)
+        present(picker, animated: true) {
+            self.showImageViewLabelInitialConfiguration()
+        }
     }
     
-    @objc private func backButtonDidTap(_ sender: UIButton) {
-        dismiss(animated: true)
+    @objc private func resetButtonDidTap(_ sender: UIButton) {
+        self.selectedImageView.image = UIImage(named: "IU")
+        self.textView.text = nil
+        self.firstDateTextField.text = nil
+        self.lastDateTextField.text = nil
+        self.locationLabel.text = "여행지를 선택해주세요"
+        infoImageViewLabel.isHidden = false
     }
     
     @objc private func saveButtonDidTap(_ sender: UIButton) {
         saveUserInputData()
+        
+        // create the alert
+        let alert = UIAlertController(title: "포스팅 되었습니다.", message: nil, preferredStyle: .alert)
+        
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            let tabbar = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController
+            tabbar?.selectedIndex = 0
+        }))
+        self.present(alert, animated: true) {
+            self.selectedImageView.image = UIImage(named: "IU")
+            self.textView.text = nil
+            self.firstDateTextField.text = nil
+            self.lastDateTextField.text = nil
+            self.locationLabel.text = "여행지를 선택해주세요"
+        }
     }
     
-    @objc private func doneButtonClicked (_sender: Any) {
+    @objc private func keyboardDoneButtonClicked (_sender: Any) {
         self.view.endEditing(true)
+    }
+    
+    @objc private func datePickerDoneButtonDidTap() {
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateStyle = .medium
+        dateFormatter1.timeStyle = .none
+        if firstDateTextField.isEditing {
+            sDate = datePicker.date
+            firstDateTextField.text = dateFormatter1.string(from: datePicker.date)
+            firstDateTextField.resignFirstResponder()
+            
+            let startDate = sDate
+            let endDate = eDate
+            let diffDate = endDate.timeIntervalSince(startDate)
+            let days = Int(diffDate / 86400)
+            print("\(days)일만큼 차이납니다.")
+        } else {
+            eDate = datePicker.date
+            lastDateTextField.text = dateFormatter1.string(from: datePicker.date)
+            lastDateTextField.resignFirstResponder()
+            
+            let startDate = sDate
+            let endDate = eDate
+            let diffDate = endDate.timeIntervalSince(startDate)
+            let days = Int(diffDate / 86400)
+            print("\(days)일만큼 차이납니다.")
+        }
+    }
+    
+    @objc private func datePickerCancelButtonDidTap() {
+        if firstDateTextField.isEditing {
+            firstDateTextField.resignFirstResponder()
+        } else {
+            lastDateTextField.resignFirstResponder()
+        }
     }
     
     @objc private func keyboardWillShow(_ sender: Notification) {
@@ -360,13 +415,14 @@ class WriteViewController: UIViewController {
         self.view.frame.origin.y = 0
     }
     
-    @objc func tapFunction(_ sender:UITapGestureRecognizer) {
+    @objc func mapButtonDidTap(_ sender: UIButton) {
         let mapVC = MapViewController()
         present(mapVC, animated: true)
     }
 
 }
 
+// MARK: - extension textView Delegate
 extension WriteViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
@@ -383,12 +439,13 @@ extension WriteViewController: UITextViewDelegate {
     }
 }
 
+// MARK: - extension textField Delegate
 extension WriteViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if firstDateTF.isEditing {
-            self.pickUpDate(self.firstDateTF)
+        if firstDateTextField.isEditing {
+            self.pickUpDate(self.firstDateTextField)
         } else {
-            self.pickUpDate(self.lastDateTF)
+            self.pickUpDate(self.lastDateTextField)
         }
     }
 }

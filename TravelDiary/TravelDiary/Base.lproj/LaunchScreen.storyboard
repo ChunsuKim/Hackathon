@@ -18,20 +18,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch" translatesAutoresizingMaskIntoConstraints="NO" id="7ij-tm-wcy">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Log" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bu-mx-mhq">
                                 <rect key="frame" x="0.0" y="244" width="414" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="FIg-fw-qpt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="30"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SnellRoundhand" family="Snell Roundhand" pointSize="30"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7ij-tm-wcy" secondAttribute="trailing" id="2D7-di-Tpd"/>
                             <constraint firstItem="2Bu-mx-mhq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6x7-wM-zFb"/>
+                            <constraint firstItem="7ij-tm-wcy" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Gq2-bT-jHa"/>
                             <constraint firstItem="2Bu-mx-mhq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Nfb-ma-Xi3"/>
+                            <constraint firstItem="7ij-tm-wcy" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="WaP-LW-6br"/>
+                            <constraint firstAttribute="bottom" secondItem="7ij-tm-wcy" secondAttribute="bottom" id="d5u-uD-6qg"/>
                             <constraint firstItem="2Bu-mx-mhq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="eTF-YN-IfN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -42,4 +48,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Launch" width="780" height="605"/>
+    </resources>
 </document>

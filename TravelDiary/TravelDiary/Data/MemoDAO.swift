@@ -41,6 +41,7 @@ class MemoDAO {
                 data.title = record.title
                 data.contents = record.contents
                 data.registerDate = record.registerdate! as Date
+                data.location = record.location
                 data.sDate = record.sDate! as Date
                 data.eDate = record.eDate! as Date
                 data.objectID = record.objectID
@@ -69,6 +70,7 @@ class MemoDAO {
         object.title = data.title
         object.contents = data.contents
         object.registerdate = data.registerDate!
+        object.location = data.location
         object.sDate = data.sDate!
         object.eDate = data.eDate!
         

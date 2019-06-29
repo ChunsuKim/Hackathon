@@ -10,6 +10,7 @@ import UIKit
 
 class MyLogViewController: UIViewController {
     
+    // MARK: - Properties
     private let topNavigationView = UIView()
     private let refreshButton = UIButton()
     private let titleLabel = UILabel()
@@ -26,6 +27,7 @@ class MyLogViewController: UIViewController {
     let layout = UICollectionViewFlowLayout()
     lazy var collectionView = UICollectionView(frame: CGRect(origin: CGPoint(x: 0, y: 100), size: CGSize(width: view.frame.width, height: view.frame.height - 100 - 80)), collectionViewLayout: layout)
 
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,6 +36,7 @@ class MyLogViewController: UIViewController {
         configureCollectionView()
     }
     
+    // MARK: - configuration User Interface
     private func configureTopView() {
         topNavigationView.backgroundColor = .white
         
@@ -78,6 +81,7 @@ class MyLogViewController: UIViewController {
         titleLabel.heightAnchor.constraint(equalToConstant: 95).isActive = true
     }
     
+    // MARK: - configuration collectionView
     private func configureCollectionView() {
         collectionView.register(MyLogCollectionViewCell.self, forCellWithReuseIdentifier: MyLogCollectionViewCell.identifier)
         collectionView.backgroundColor = .clear
@@ -92,6 +96,7 @@ class MyLogViewController: UIViewController {
         configureFlowLayout()
     }
     
+    // MARK: - configuration collectionView FlowLayout
     private func configureFlowLayout() {
         layout.minimumInteritemSpacing = UI.itemSpacing
         layout.minimumLineSpacing = UI.lineSpacing
@@ -114,16 +119,15 @@ class MyLogViewController: UIViewController {
         }
     }
     
+    // MARK: - Action Method
     @objc private func changeCollectionViewDirection(_ sender: Any) {
         let current = layout.scrollDirection
         layout.scrollDirection = (current == .horizontal) ? .vertical : .horizontal
         configureFlowLayout()
     }
-    
-
 }
 
-
+// MARK: - extension collectionView DataSource
 extension MyLogViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10

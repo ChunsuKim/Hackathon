@@ -124,6 +124,7 @@ final class MainViewController: UIViewController {
         }
     }
     
+    // MARK: - Action Method
     @objc private func changeCollectionViewDirection(_ sender: Any) {
         let current = layout.scrollDirection
         layout.scrollDirection = (current == .horizontal) ? .vertical : .horizontal
@@ -132,6 +133,7 @@ final class MainViewController: UIViewController {
     
 }
 
+// MARK: - extension collectionView DataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -151,18 +153,11 @@ extension MainViewController: UICollectionViewDataSource {
         cell.configureCellContent(image: item.image, title: item.title)
         cell.tag = indexPath.item
         
-        // Date 타입의 날짜 포맷지정
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        cell.registerDate.text = formatter.string(from: item.registerDate!)
-        
-//        cell.configureCellContent(image: UIImage(named: "default"), title: "잠실야경")
-//        cell.backgroundColor = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
-        
         return cell
     }
 }
 
+// MARK: - extension collectionView Delegate
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
@@ -171,22 +166,3 @@ extension MainViewController: UICollectionViewDelegate {
         show(detailVC, sender: nil)
     }
 }
-
-//extension MainViewController: CustomCollectionViewCellDelegate {
-//    func removeCell(_ sender: Int) {
-//        let data = self.appDelegate.memolist[sender]
-//
-//        let alertAction = UIAlertController(title: "정말 삭제하실 건가요?", message: "삭제 후에는 복구 할 수 없습니다.", preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "삭제하기", style: .destructive) { (_) in
-//            if self.dao.delete(data.objectID!) {
-//                self.appDelegate.memolist.remove(at: sender)
-//            }
-//            self.collectionView.reloadData()
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-//        alertAction.addAction(okAction)
-//        alertAction.addAction(cancelAction)
-//        present(alertAction, animated: true)
-//    }
-//}

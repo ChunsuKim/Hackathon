@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window? = UIWindow(frame: UIScreen.main.bounds)
         
         window?.backgroundColor = .white
-        window?.rootViewController = CustomTapBarController()
+        window?.rootViewController = LaunchViewController()
         window?.makeKeyAndVisible()
         
         return true

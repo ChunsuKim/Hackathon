@@ -13,30 +13,30 @@
 
 * How we divide up task to develop this App : 
 
-ChunsuKim : CoreData, Animation, Custom TapBarController, MainViewController
-
-vdodov: Themes, Custom CollectionView and Cell, DetailViewController
+    > ChunsuKim : CoreData, Animation, Custom TapBarController, MainViewController
+    >
+    > vdodov: Themes, Custom CollectionView and Cell, DetailViewController
 
 * What is our result of Hackathon : [DayByDay Diary Apps](https://github.com/ChunsuKim/Hackathon/tree/master/DayByDay_ver_3.0%20/DayByDay)
 
 * What features are in our Apps :
 
-1. Saving and loading the data which user types input data.
+    1. Saving and loading the data which user types input data.
 
-2. Saving and loading the image which user inserts selected image.
+    2. Saving and loading the image which user inserts selected image.
 
-3. listing the user memo up to recent saving.
+    3. listing the user memo up to recent saving.
 
-4. Changing color themes if user selects color.
+    4. Changing color themes if user selects color.
 
-5. Saving user's status message.
+    5. Saving user's status message.
 
-6. Showing user's memo lists as a card.
+    6. Showing user's memo lists as a card.
 
 * What we learn after finishing Hackathon : 
 
-1. Using and adapting a CoreData
+    1. Using and adapting a CoreData
 
-2. Using UICollectionView and Cell
+    2. Using UICollectionView and Cell
 
-3. When we tried to apply themes, we had to know Views life cycle.
+    3. When we tried to apply themes, we had to know Views life cycle.

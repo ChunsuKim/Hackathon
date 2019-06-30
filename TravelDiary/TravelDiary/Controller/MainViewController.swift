@@ -48,6 +48,11 @@ final class MainViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        configureFlowLayout()
+    }
+    
     // MARK: - configuration UserInterface
     private func configureTopView() {
         topNavigationView.backgroundColor = .white
@@ -93,11 +98,6 @@ final class MainViewController: UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
         
-        configureFlowLayout()
-    }
-    
-    override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
         configureFlowLayout()
     }
     

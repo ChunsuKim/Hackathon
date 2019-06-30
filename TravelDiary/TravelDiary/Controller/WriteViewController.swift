@@ -81,7 +81,7 @@ class WriteViewController: UIViewController {
         infoImageViewLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         infoImageViewLabel.textAlignment = .center
         
-        // Date and Location UI configuration
+        // Related Date and Location UserInterface configuration
         firstDateLabel.text = "여행시작 :"
         lastDateLabel.text = "여행끝 :"
         firstDateTextField.placeholder = "01 Jan 2019"
@@ -147,6 +147,8 @@ class WriteViewController: UIViewController {
     }
     
     private func configureConstraints() {
+        
+        // Top navigation view configure constraints
         topNavigationView.translatesAutoresizingMaskIntoConstraints = false
         topNavigationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         topNavigationView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -171,6 +173,7 @@ class WriteViewController: UIViewController {
         saveButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         saveButton.trailingAnchor.constraint(equalTo: topNavigationView.trailingAnchor, constant: -20).isActive = true
         
+        // ImageView configure constraints
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.topAnchor.constraint(equalTo: topNavigationView.bottomAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -189,18 +192,7 @@ class WriteViewController: UIViewController {
         infoImageViewLabel.trailingAnchor.constraint(equalTo: selectedImageView.trailingAnchor).isActive = true
         infoImageViewLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 10).isActive = true
-        textView.centerXAnchor.constraint(equalTo: dateView.centerXAnchor).isActive = true
-        textView.widthAnchor.constraint(equalToConstant: 350).isActive = true
-        textView.heightAnchor.constraint(equalToConstant: 600).isActive = true
-        textView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10).isActive = true
-        
-        textViewLabel.translatesAutoresizingMaskIntoConstraints = false
-        textViewLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 10).isActive = true
-        textViewLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        textViewLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
-        
+        // Related Date and Location UserInterface configure constraints
         dateView.translatesAutoresizingMaskIntoConstraints = false
         dateView.topAnchor.constraint(equalTo: selectedImageView.bottomAnchor, constant: 10).isActive = true
         dateView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -236,6 +228,19 @@ class WriteViewController: UIViewController {
         mapButton.leadingAnchor.constraint(equalTo: locationLabel.trailingAnchor, constant: 10).isActive = true
         mapButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
         mapButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        // TextView configure constraints
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.topAnchor.constraint(equalTo: dateView.bottomAnchor, constant: 10).isActive = true
+        textView.centerXAnchor.constraint(equalTo: dateView.centerXAnchor).isActive = true
+        textView.widthAnchor.constraint(equalToConstant: 350).isActive = true
+        textView.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        textView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10).isActive = true
+        
+        textViewLabel.translatesAutoresizingMaskIntoConstraints = false
+        textViewLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 10).isActive = true
+        textViewLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        textViewLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
     }
     
     private func pickUpDate(_ textField : UITextField){

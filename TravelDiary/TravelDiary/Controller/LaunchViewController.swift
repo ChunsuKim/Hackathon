@@ -26,7 +26,7 @@ final class LaunchViewController: UIViewController {
         view.addSubview(airplaneImage)
         airplaneImage.frame = CGRect(x: -150, y: 150, width: 150, height: 150)
         
-        let centerOrigin = airplaneImage.center
+        _ = airplaneImage.center
         UIView.animateKeyframes(
             withDuration: 2,
             delay: 0.0,
@@ -49,8 +49,8 @@ final class LaunchViewController: UIViewController {
         configureConstraints()
         operateActivitiIndicator()
         
-        // 3초 뒤에 뷰 컨트롤러를 띄우는거
-        Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { _ in
+        // 4초 뒤에 뷰 컨트롤러를 띄우는거
+        timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { _ in
             let appDelegate =  UIApplication.shared.delegate as! AppDelegate
             let tapbar = CustomTapBarController()
             
@@ -77,7 +77,7 @@ final class LaunchViewController: UIViewController {
         statusLabel.textColor = .white
         statusLabel.textAlignment = .center
         statusLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        copyRightLabel.text = " Copyright (c) 2019. Travelog. All rights reserved."
+        copyRightLabel.text = " Copyright (c) 2019. TravelLog. All rights reserved."
         copyRightLabel.textColor = #colorLiteral(red: 0.009850479662, green: 0.29078269, blue: 0.5762767196, alpha: 1)
         copyRightLabel.textAlignment = .center
         copyRightLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)

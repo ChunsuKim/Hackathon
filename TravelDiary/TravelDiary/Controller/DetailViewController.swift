@@ -219,6 +219,7 @@ class DetailViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    // FIXME: - 삭제 기능 구현 해야함
     @objc func removeButtonDidTap(_ sender: UIButton) {
         delegate?.removeCell(view.tag)
     }
